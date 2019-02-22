@@ -1,8 +1,8 @@
 import os
 import progressbar
 from commands import getoutput
-def Sub(files, Type = '.sh', logID=''):
-    if len(files) ==0:
+def Sub(files, Type='.sh', logID=''):
+    if len(files) == 0:
         print("Sub All Jobs Successful!!!")
         return
     list.sort(files)

@@ -1,7 +1,7 @@
 import os
 import sys
-import myfunction as m
-import hep
+import util as m
+from SubJob import hep
 '''
 Usage:  [option] [path]
 Option: 
