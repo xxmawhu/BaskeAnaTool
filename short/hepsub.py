@@ -2,14 +2,20 @@ import os
 import sys
 import util as m
 from SubJob import hep
-'''
-Usage:  [option] [path]
+
+_USAGE = '''
+Usage:  [option] [file or path]
 Option: 
     -c submit all the c++ file in the path, and execute it with ROOT,
          First a .sh file will be made associated with a .c file
          Then sub this .sh file to the server center
+
     -sh Add x mod to the bash files, and submit all of them.
+
     -txt Sub all .txt file with hep_contior
+
+    -r sub all file in this path
+
 Path: the default path is ".", and you can special it as a path or a file.
 '''
 opt = []
@@ -37,7 +43,9 @@ else:
     else:
         s = m.findfile('.')
 list.sort(s)
-
+if "-help" in opt or "--help" in opt:
+    print _USAGE
+    exit(0)
 if len(opt) == 0:
     jobcol = m.findtype(s, '.txt')
     hep.Sub(jobcol)

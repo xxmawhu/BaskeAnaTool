@@ -65,7 +65,7 @@ class process():
         self._GetInput()
         tab ='    '
         f=open(name, 'w')
-        s = '// Copyright %d-%d-%d Ma Xinxin\n'%(time.localtime()[0:3])
+        s = '// Copyright (C) %d-%d-%d Ma Xinxin\n'%(time.localtime()[0:3])
         s += '''void '''+main+'''() {
     TChain* ch = new TChain("'''+self._tree+'''");
     ch->Add("'''+str(self._raw)+'''");

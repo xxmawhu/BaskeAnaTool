@@ -1,0 +1,83 @@
+\documentclass[transcompress]{beamer}
+\mode<presentation>
+%\usepackage[space,noindent]{ctex}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{overpic}
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usetheme{Madrid}
+\usefonttheme{structureitalicserif}
+\usepackage{hyperref}
+%\usecolortheme{structure}
+%\usefonttheme{professionalfonts}
+\definecolor{beamer@blendedred}{rgb}{0.629, 0.307, 0.063} 
+\definecolor{bkc}{rgb}{0.0,0.50,0.46} 
+\definecolor{juhong}{rgb}{0.80,0.20,0.00}
+\setbeamercolor{frametitle}{fg=white,bg=bkc}
+\setbeamercolor{title}{fg=white,bg=bkc}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{block title}{bg=blue,fg=bkc}
+\setbeamertemplate{itemize items}{\color{green} $\checkmark$}
+\addtobeamertemplate{block begin}{%
+\setlength{\textwidth}{0.5\textwidth}%
+}{}
+
+\setbeamerfont{frametitle}{size=\LARGE }
+\begin{document}
+\title{ $\Lambda_{c}^{+} \rightarrow p \omega $ }
+\author[maxx@ihep.ac.cn]{Xinxin Ma} 
+\institute[IHEP]{Institute of High Energy Physics, maxx@ihep.ac.cn}
+\date{\today}
+\AtBeginPart{
+    \frame{
+        \frametitle{partpage}
+        \tableofcontents
+    }
+}
+\AtBeginSection[] { 
+    \begin{frame}
+        \frametitle{} 
+        \tableofcontents[currentsection,hideothersubsections] 
+    \end{frame} 
+    \addtocounter{framenumber}{-1}
+}
+\setbeamertemplate{footline}{% no footline
+	\begin{beamercolorbox}[sep=0em,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor} 
+	\end{beamercolorbox}%
+}
+
+\begin{frame} %p1 title
+    \titlepage
+\end{frame}
+
+\setbeamertemplate{footline}{% set footline
+  	\begin{beamercolorbox}[sep=0em,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor} 
+  		\scriptsize{\color{juhong} \bf \insertframenumber / \inserttotalframenumber}
+      		\hspace{5cm}%
+  		\scriptsize { \color{juhong} \inserttitle}
+    \end{beamercolorbox}%
+}
+
+\begin{frame}% outline
+    \frametitle{Outline}
+    \tableofcontents
+\end{frame}
+
+
+
+\section{Event Selection}
+
+\begin{frame}{Event Selection(2)}
+\end{frame}
+\begin{frame}{Event Selection}
+    
+\end{frame}
+\section{Summary}
+\begin{frame}{Summary}
+    
+\end{frame}
+
+\end{document}

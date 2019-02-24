@@ -558,7 +558,7 @@ _line_length = 80
 
 # The allowed extensions for file names
 # This is set by --extensions flag.
-_valid_extensions = set(['cc', 'h', 'cpp', 'cu', 'cuh'])
+_valid_extensions = set(['cc', 'h', 'cpp', 'cu', 'cuh', 'cxx', 'C'])
 
 # Treat all headers starting with 'h' equally: .h, .hpp, .hxx etc.
 # This is set by --headers flag.
@@ -2823,6 +2823,12 @@ def CheckForNonStandardConstructs(filename, clean_lines, linenum,
   if Search(r'("|\').*\\(%|\[|\(|{)', line):
     error(filename, linenum, 'build/printf_format', 3,
           '%, [, (, and { are undefined character escapes.  Unescape them.')
+
+  if Search(r'=\s\s', line):
+    error(filename, linenum, 'whitespace/parens', 4,  'Extra space after =')
+  if Search(r'\s\s=', line):
+    error(filename, linenum, 'whitespace/parens', 4,  
+            'Extra space before =')
 
   # For the rest, work with both comments and strings removed.
   line = clean_lines.elided[linenum]

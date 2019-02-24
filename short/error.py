@@ -1,3 +1,4 @@
+# Copyright (C) 2019 Ma Xinxin
 import os
 import util as mf
 #jobs=os.listdir('.')
