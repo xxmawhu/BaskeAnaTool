@@ -74,6 +74,17 @@ def Process(errlog):
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
 
+        elif 'Extra space before' in line:
+            filename = line.split(':')[0]
+            linenum = int(line.split(":")[1])
+            ll = line.split()
+            indx = ll.index("before")
+            oper = ll[indx + 1]
+            command = '%d, %ds/ %s/%s/g'%(linenum, linenum, oper, oper)
+            print command
+            getoutput('sed -i "%s" '%(command) + filename)
+            errNum += 1
+
         elif '{ should almost always be at the end' in line:
             filename = line.split(':')[0]
             linenum = int(line.split(":")[1])
@@ -122,13 +133,22 @@ def Process(errlog):
             getoutput('sed -i "%s" '%(command2) + filename)
             errNum += 1
 
+        elif 'Mismatching spaces inside ()' in line:
+            filename = line.split(':')[0]
+            linenum = int(line.split(":")[1])
+            command = '%d, %ds/( /(/g'%(linenum, linenum)
+            getoutput('sed -i "%s" '%(command) + filename)
+            command = '%d, %ds/ )/)/g'%(linenum, linenum)
+            getoutput('sed -i "%s" '%(command) + filename)
+            errNum += 1
+
         elif 'Extra space before' in line:
             filename = line.split(':')[0]
             linenum = int(line.split(":")[1])
             ll = line.split()
             indx = ll.index("before")
             oper = ll[indx + 1]
-            command = '%d, %ds/ %s/%s/g'%(linenum, linenum, oper, oper)
+            # command = '%d, %ds/ %s/%s/g'%(linenum, linenum, oper, oper)
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
 
