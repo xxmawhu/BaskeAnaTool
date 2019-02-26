@@ -2823,11 +2823,17 @@ def CheckForNonStandardConstructs(filename, clean_lines, linenum,
   if Search(r'("|\').*\\(%|\[|\(|{)', line):
     error(filename, linenum, 'build/printf_format', 3,
           '%, [, (, and { are undefined character escapes.  Unescape them.')
-
-  if Search(r'=\s\s', line):
-    error(filename, linenum, 'whitespace/parens', 4,  'Extra space after =')
-  if Search(r'\s\s=', line):
-    error(filename, linenum, 'whitespace/parens', 4,  
+  # no space around = when assign a default value in a function
+# if Search(r'=*)', line):
+#     #print(line)
+#     error(filename, linenum, 'whitespace/parens', 
+#             4,  'Extra space after =')
+  if Search(r'=\s\s', line) and not Search(r'\(*=*\)', line):
+      print line
+      error(filename, linenum, 'whitespace/parens', 
+              4,  'Extra space after =')
+  if Search(r'\s\s=', line) and not Search(r'\(*=*\)', line):
+      error(filename, linenum, 'whitespace/parens', 4,  
             'Extra space before =')
 
   # For the rest, work with both comments and strings removed.

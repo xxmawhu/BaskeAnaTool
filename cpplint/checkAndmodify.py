@@ -81,7 +81,9 @@ def Process(errlog):
             indx = ll.index("before")
             oper = ll[indx + 1]
             command = '%d, %ds/ %s/%s/g'%(linenum, linenum, oper, oper)
-            print command
+            # print(line)
+            # print(command)
+            # print('sed -i "%s" '%(command) + filename)
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
 

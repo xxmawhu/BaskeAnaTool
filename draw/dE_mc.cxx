@@ -1,6 +1,6 @@
 // Copyright (c) 2019-2-26 maxx
 #include "bes3plotstyle_1.C"
-void deltaE() {
+void dE_mc() {
     SetStyle();
     gStyle->SetPadRightMargin(0.15);
 
