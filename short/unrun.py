@@ -1,8 +1,19 @@
 import os
 from commands import getoutput as do
 import util as mf
-import boss
 from SubJob import hep
+import sys
+
+_USAGE = '''Usage:  without any option now
+Function:
+    1) find all ".txt" and ".sh" file recursively
+    2) try to find a log file assocaited with the ".txt" (or ".sh") file
+    3) Once miss the log file, then resub this file 
+'''
+
+if "-help" in sys.argv or "--help" in sys.argv:
+    print _USAGE
+    exit(0)
 #jobs=os.listdir('.')
 jobs=mf.findfiler('.')
 ##########################
@@ -46,3 +57,4 @@ for i in simJobList:
         unrunShList.append(i)
 
 hep.Sub(unrunShList, '.sh')
+

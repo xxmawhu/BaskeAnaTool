@@ -1,7 +1,7 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-alias HepSub='python ${DIR}/hepsub.py'
-alias Heprm='python ${DIR}/Heprm.py'
-alias CheckBossJob='python ${DIR}/error.py'
-alias CheckThenSub='python ${DIR}/hepsuberror.py'
-alias Unrun='python ${DIR}/unrun.py'
-alias RunNow='python ${DIR}/runnow.py'
+SHORTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+alias Hepsub='python ${SHORTDIR}/hepsub.py'
+alias Heprm='python ${SHORTDIR}/Heprm.py'
+alias CheckBossJob='python ${SHORTDIR}/error.py'
+alias CheckThenSub='python ${SHORTDIR}/hepsuberror.py'
+alias Unrun='python ${SHORTDIR}/unrun.py'
+alias Runnow='python ${SHORTDIR}/runnow.py'

@@ -74,3 +74,44 @@ class heprm:
         self._getids()
         for i in self._ids:
             os.system('hep_rm '+str(i))
+
+def shrun(files):
+    """ 
+    Running all bash and cpp files 
+    """
+    mypath=os.getcwd()
+    f=open('runSH.sh','w')
+    f.write('#!/bin/bash\n')
+    for i in files:
+        path=os.path.split(i)[0]
+        file=os.path.split(i)[1]
+        name=os.path.splitext(i)[0]
+        f.write('cd '+path+'\n')
+        f.write("sh "+file+'\n')
+    f.write('rm -f runSH.sh\n')
+    f.close()
+    os.chdir(mypath)
+    print( mypath)
+    os.system("chmod +x runSH.sh")
+    os.system('source '+mypath+'/'+'runSH.sh')
+
+
+def rootrun(files):
+    """
+    ls all cpp file recursively, and process one by one with "root -l -b -q"
+    """
+    mypath=os.getcwd()
+    f=open('rootrun.sh', 'w')
+    f.write('#!/bin/bash\n')
+    for i in files:
+        path=os.path.split(i)[0]
+        file=os.path.split(i)[1]
+        name=os.path.splitext(i)[0]
+        f.write('cd '+path+'\n')
+        f.write("root -l -b -q "+file+'\n')
+    f.write('rm -f rootrun.sh\n')
+    f.close()
+    os.system("chmod +x rootrun.sh")
+    os.system('source '+mypath+'/'+'rootrun.sh')
+    os.system('rm -f rootrun.sh')
+

@@ -164,9 +164,14 @@ def Process(errlog):
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
     return errNum
-    
-
 def main():
+    _USAGE = '''usage: [files]
+    check the cpp file with the Google style...
+    files is one or some cpp file, which end with .cpp .cc .h .cxx .C etc.
+    '''
+    if '-help' in sys.argv or '--help' in sys.argv:
+        print(_USAGE)
+        exit(1)
     option=''
     for i in sys.argv[1:]:
         option += str(i)+' '

@@ -1,7 +1,19 @@
 import os
 import sys
-import util as m
-import boss
+import util
+
+_USAGE = '''Usage:  Running [option] [keyword]
+Function:
+    1.find all files (recursively)
+    2.exe it with "root" or "sh"
+Option:
+    -r recursively
+    -sh exe the file with "sh"
+'''
+if "-help" in sys.argv or "--help" in sys.argv:
+    print(_USAGE)
+    exit(0)
+
 opt=[]
 arv=[]
 #------get the option----------
@@ -11,16 +23,13 @@ for i in range(1,len(sys.argv)):
     else:
         arv.append(sys.argv[i])
 #---------end ------------
-#  m.findfiler(path) :return all files in path
-#  m.findfile(parh):  return files in path
-#  m.findtype(files,type='.txt'):    return type file in files
 #
 ##--------------------------
 mypath=os.getcwd()
 if '-r' in opt:
-    s=m.findfiler('.')
+    s=util.findfiler('.')
 else:
-    s=m.findfile('.')
+    s=util.findfile('.')
 #------find all jobs
 jobcol = []
 name=""
@@ -34,6 +43,6 @@ for i in s:
         jobcol.append(i)
 jobcol.sort()
 if "-sh" in opt:
-    boss.shrun(jobcol)
+    util.shrun(jobcol)
 else:
-    boss.rootrun(jobcol)
+    util.rootrun(jobcol)
