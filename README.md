@@ -1,2 +1,3 @@
 # BaskeAnaTool
-A basket of analysis codes
+A basket of analysis codes,
+Please source setup.sh
