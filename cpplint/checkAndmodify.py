@@ -54,6 +54,22 @@ def Process(errlog):
             #print command
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
+        
+        elif 'At least two spaces is best between code and comments' in line:
+            filename = line.split(':')[0]
+            linenum = int(line.split(":")[1])
+            command = r'%d, %ds/\/\// \/\//g'%(linenum, linenum)
+            #print command
+            getoutput('sed -i "%s" '%(command) + filename)
+            errNum += 1
+
+        elif 'Tab found' in line:
+            filename = line.split(':')[0]
+            linenum = int(line.split(":")[1])
+            command = r'%d, %ds/\t/    /g'%(linenum, linenum)
+            #print command
+            getoutput('sed -i "%s" '%(command) + filename)
+            errNum += 1
 
         elif 'Extra space before last semicolon.' in line:
             filename = line.split(':')[0]
@@ -62,6 +78,15 @@ def Process(errlog):
             #print command
             getoutput('sed -i "%s" '%(command) + filename)
             errNum += 1
+        
+        elif 'Extra space before ( in function call' in line:
+            filename = line.split(':')[0]
+            linenum = int(line.split(":")[1])
+            command = r'%d, %ds/(/ (/g'%(linenum, linenum)
+            #print command
+           # getoutput('sed -i "%s" '%(command) + filename)
+           # errNum += 1
+
 
         elif 'Missing space before' in line:
             filename = line.split(':')[0]
@@ -88,6 +113,8 @@ def Process(errlog):
             errNum += 1
 
         elif '{ should almost always be at the end' in line:
+            if "{}" in line:
+                continue
             filename = line.split(':')[0]
             linenum = int(line.split(":")[1])
             ll = line.split()

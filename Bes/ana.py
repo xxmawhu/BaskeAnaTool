@@ -15,17 +15,17 @@ class ana:
         self.mode=self.wkpth+'mode/'
         self.rawpth=self.wkpth+'root/'
         self.cxxpth=self.wkpth+'cxx/'
-        self.rootnm='Example'
+        self.rootnm='FILE'
         self.size=1.0 
         self.cut=[]
         self._num=1
         self.tree=[]
         self.name=[]
         self._drop = []
-    def addcut(self,tree,cut='',name='example'):
+    def addcut(self,tree,cut='',name='(1+1==2)'):
         self.tree.append(tree)
         self.cut.append(cut)
-        if name=='example':
+        if name=='(1+1==2)':
             self.name.append(tree)
         else:
             self.name.append(name)
@@ -47,7 +47,7 @@ class ana:
         boss.mkdir(self.cxxpth)
     def maxsize(self,x):
         self.size=x
-    def setrootname(self,x):
+    def setrootname(self, x):
         self.rootnm=x
     def setjobhead(self,x):
         t1='ApplicationMgr.HistogramPersistency = "ROOT";\n'
@@ -104,7 +104,7 @@ class ana:
         print '.........................................................'
         print dst
         print 'each job contain about ',self.size,'G dsts'
-        dsts = int(do('ls -1 -F '+ dst+r'  | grep -v [/$] | wc -l')) 
+        dsts = int(do('ls -1 -F '+ dst+r'  | grep -v [/$] | wc -l'))
         print "total dsts: ", dsts
         size = int( int(do('du ' + dst ).split()[0])/1024./1024./self.size )
         job=self.job+name

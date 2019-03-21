@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os, joboption
+import os
 from commands import getoutput as do
 #-----small functions-----
 def mkdir(s):
@@ -149,10 +149,9 @@ class subjobs:
     def _process(self,i,j):
         list.sort(self._s)
         dst=''
-        for k in range(i,j):
-            dst=dst+ ''' " '''+self._dst + '/' + self._s[k-1] +''' ",
-'''
-        dst=dst+'\"' +self._dst+ '/' + self._s[j-1] +'\"' +'\n'
+        for k in range(i, j):
+            dst += '\t"'+self._dst + '/' + self._s[k-1] +'",\n'
+        dst += '\t"' +self._dst+ '/' + self._s[j-1] +'"' +'\n'
         return dst
     def setbody(self,s):
         self._body=s
@@ -168,10 +167,12 @@ class subjobs:
         f.write(self._body)
         f.write(self._process(i,j))
         f.write('};\n')
-        root='''
-NTupleSvc.output={
-  "FILE_'''+self._name+'''  DATAFILE=' '''+self._root+'/'+self.root +_num+ '''.root' OPT='new' TYP='ROOT' "
-};'''
+        root = 'NTupleSvc.output={\n'
+        root += '\t"' + self._name 
+        root += " DATAFILE = '" + self._root +'/'+self.root + _num + ".root'"
+        root += " OPT = 'new'"
+        root += " TYP = 'ROOT'\"\n"
+        root += "};\n"
         f.write(root)
         f.close()
     def jobs(self):

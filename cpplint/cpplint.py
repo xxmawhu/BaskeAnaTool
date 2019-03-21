@@ -558,7 +558,7 @@ _line_length = 80
 
 # The allowed extensions for file names
 # This is set by --extensions flag.
-_valid_extensions = set(['cc', 'h', 'cpp', 'cu', 'cuh', 'cxx', 'C'])
+_valid_extensions = set(['cc', 'h', 'cpp', 'cu', 'cuh', 'cxx', 'C', 'hh'])
 
 # Treat all headers starting with 'h' equally: .h, .hpp, .hxx etc.
 # This is set by --headers flag.
