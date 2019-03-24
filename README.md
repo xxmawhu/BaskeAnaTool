@@ -1,14 +1,12 @@
 # BaskeAnaTool
-=========
 Usage
 =========
-----------------------------------------
-1.When firstly use this package, please: 
+
+1. When firstly use this package, please: 
 ---------------------------------------
    ` source ./setup.sh`
 
 
----------------------------------------
 2. Functions:
 ---------------------------------------
     A) sub jobs:
