@@ -24,6 +24,7 @@
   `SimJpsi [decay.card] [number of events]`
 
   - different type
+
    - Sim3770 
    - SimNewJpsi
    - SimJpsi
