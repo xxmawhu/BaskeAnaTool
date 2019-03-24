@@ -14,5 +14,5 @@ if "-help" in sys.argv or "--help" in sys.argv:
     print(_USAGE)
     exit()
 
-h=heprm()
+h = heprm()
 h.run()

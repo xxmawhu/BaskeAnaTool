@@ -2,32 +2,6 @@ import os
 import commands
 import sys
 import re
-#------the function to select the files whose type is txt
-def findtype(files,type='.txt'):
-    txt=[]
-    for i in files:
-        tp=os.path.splitext(i)[1]
-        if(tp==type):
-            txt.append(i)
-    return txt
-#-----find .c .cxx in files list
-#--------end of function-------------------------------#
-mypath=os.getcwd()
-path=os.listdir('.')
-#-----find all file in path 'p'
-def findfiler(p):
-    file=[]
-    if os.path.isfile(p):
-        file.append(os.path.abspath(p))
-    else:
-        path=[]
-        for i in os.listdir(p):
-            path.append(p+'/'+i)
-        for i in path:
-            file.extend(findfiler(i))
-        file.sort()
-    return file
-#-----end-------#
 #-----find only file in current dir:p
 def findfile(p):
     File = []
@@ -51,8 +25,35 @@ def findfile(p):
             File += findfile(i)
         File.sort()
         return File
-    
     return File
+
+
+def findtype(files, type = '.txt'):
+    # the function to select the files whose type is txt
+    txt = []
+    for i in files:
+        tp=os.path.splitext(i)[1]
+        if(tp==type):
+            txt.append(i)
+    return txt
+#-----find .c .cxx in files list
+#--------end of function-------------------------------#
+mypath=os.getcwd()
+path=os.listdir('.')
+#-----find all file in path 'p'
+def findfiler(p):
+    file=[]
+    if os.path.isfile(p):
+        file.append(os.path.abspath(p))
+    else:
+        path=[]
+        for i in os.listdir(p):
+            path.append(p+'/'+i)
+        for i in path:
+            file.extend(findfiler(i))
+        file.sort()
+    return file
+#-----end-------#
 #-------end-----------#
 
 class heprm:
@@ -61,9 +62,9 @@ class heprm:
         self._arv=[]
         self._stat=''
         self._ids=[]
-        self._keyword='maxx'
+        self._keyword='XXXX'
     def _getopt(self):
-        for i in range(1,len(sys.argv)):
+        for i in range(1, len(sys.argv)):
             if '-' in sys.argv[i]:
                 self._opt.append(sys.argv[i])
             else:
@@ -74,13 +75,17 @@ class heprm:
             self._keyword=self._arv[0]
     def _qstat(self):
         self._getkey()
-        self._stat=commands.getoutput('hep_q -u | grep '+self._keyword)
+        self._stat = commands.getoutput('hep_q -u ')
     def _getids(self):
         self._qstat()
-        lines=self._stat.splitlines()
+        lines = self._stat.splitlines()
+        key = self._keyword.replace("*", "[a-zA-Z0-9]*")
+        pattern = re.compile(key)
         for i in lines:
-            if not 'JOBID' in i:
-                self._ids.append(int(float(i.split()[0]))) 
+            if pattern.findall(i) and not "JOBID" in i:
+                ID = float(i.split()[0])
+                # print ID
+                self._ids.append(int(ID)) 
     def run(self):
         self._getids()
         for i in self._ids:
