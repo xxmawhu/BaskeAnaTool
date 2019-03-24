@@ -9,18 +9,20 @@ Usage
 
 2. Functions:
 ---------------------------------------
-A) sub jobs:
+### A) sub jobs:
+	BOSS jobs: <br /> 
+    Hepsub -txt [-r] [path]
 
-	- BOSS jobs: `Hepsub -txt [-r] [path]`
-	- Bash jobs: `Hepsub -sh [-r] [path] `
-	- ROOT jobs: `Hepsub -c [-r] [path]`
+	Bash jobs: <br />
+    Hepsub -sh [-r] [path]
 
-B) make jobs, only the reconstruction and simulation jobs can be made
+    ROOT jobs: <br /> 
+    Hepsub -c [-r] [path]
 
+### B) make jobs, only the reconstruction and simulation jobs can be made
 	- usage: `SimJpsi [decay.card] [number of events]`
-
-different type
-
+    
+    different type
     - Sim3770 
     - SimNewJpsi
     - SimJpsi
