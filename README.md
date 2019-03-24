@@ -1,21 +1,24 @@
 # BaskeAnaTool
+=========
 Usage
-=====
+=========
+----------------------------------------
 1.When firstly use this package, please: 
 ---------------------------------------
    ` source ./setup.sh`
 
 
+---------------------------------------
 2. Functions:
 ---------------------------------------
     A) sub jobs:
 		- BOSS jobs:
 `Hepsub -txt [-r] [path]`
 
-	- Bash jobs
+	    - Bash jobs
 `Hepsub -sh [-r] [path] `
 
-	- ROOT jobs
+	    - ROOT jobs
 `Hepsub -c [-r] [path]`
 
 	B) make jobs, only the reconstruction and simulation jobs can be made
