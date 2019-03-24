@@ -1,6 +1,7 @@
 import os
 import commands
 import sys
+import re
 #------the function to select the files whose type is txt
 def findtype(files,type='.txt'):
     txt=[]
@@ -29,19 +30,29 @@ def findfiler(p):
 #-----end-------#
 #-----find only file in current dir:p
 def findfile(p):
-    file=[]
+    File = []
+    # if p is a file
     if os.path.isfile(p):
-        file.append(os.getcwd()+'/'+p)
-    else:
+        File.append(os.path.abspath(p))
+        File.sort()
+        return File
+    # p is a director
+    if os.path.isdir(p):
         for i in os.listdir(p):
-            if '/' in p :
-                file.append(os.getcwd()+'/'+p+i)
-            elif p=='.':
-                file.append(os.getcwd()+'/'+i)
-            else:
-                file.append(os.getcwd()+'/'+p+'/'+i)
-        file.sort()
-    return file
+            if os.path.isfile(i):
+                File.append(os.path.join(os.path.abspath(p), i))
+        File.sort()
+        return File
+    # p is a string, such as *.cxx
+    s = p.replace("*", "[a-zA-Z0-9]*")
+    pattern = re.compile(s)
+    for i in os.listdir("."):
+        if pattern.match(i):
+            File += findfile(i)
+        File.sort()
+        return File
+    
+    return File
 #-------end-----------#
 
 class heprm:

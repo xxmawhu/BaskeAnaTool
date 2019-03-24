@@ -32,11 +32,15 @@ for i in range(1,len(sys.argv)):
 #
 # --------------------------
 # mypath=os.getcwd()
-if len(arv)>0:
+# the jobs list
+s = []
+if len(arv) > 0:
     if '-r' in opt:
-        s=m.findfiler(arv[0])
+        for i in arv:
+            s += m.findfiler(i)
     else:
-        s=m.findfile(arv[0])
+        for i in arv:
+            s += m.findfile(i)
 else:
     if '-r' in opt:
         s = m.findfiler('.')
