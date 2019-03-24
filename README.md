@@ -1,14 +1,13 @@
 # BaskeAnaTool
-Usage
+
+When firstly use this package, please: 
+=====================================
+   `source ./setup.sh`
+
+
+Functions:
 =========
 
-1. When firstly use this package, please: 
----------------------------------------
-   ` source ./setup.sh`
-
-
-2. Functions:
----------------------------------------
 ### A) sub jobs:
 	BOSS jobs:
         Hepsub -txt [-r] [path]
