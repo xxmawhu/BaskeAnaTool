@@ -1,5 +1,6 @@
 # BaskeAnaTool
 1.When firstly use this package, please: 
+
   source ./setup.sh
 2.A basket of analysis codes, contains:
   A) sub job:
