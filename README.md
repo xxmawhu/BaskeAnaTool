@@ -6,26 +6,26 @@ Usage
    ` source ./setup.sh`
 
 
-2.A basket of analysis codes, contains:
+2. Functions:
 ---------------------------------------
-    # A) sub jobs: \<br>
-        - ## BOSS jobs:
-         `Hepsub -txt [-r] [path]`
+    A) sub jobs:
+		- BOSS jobs:
+`Hepsub -txt [-r] [path]`
 
-        - ## Bash jobs \<br>
-          `Hepsub -sh [-r] [path] `
+	- Bash jobs
+`Hepsub -sh [-r] [path] `
 
-        - ## ROOT jobs \<br>
-     	`Hepsub -c [-r] [path]`
- 
- 	# B) make jobs, only the reconstruction and simulation jobs can be made
-  		- ## usage
-         `SimJpsi [decay.card] [number of events]`
+	- ROOT jobs
+`Hepsub -c [-r] [path]`
 
-        ## different type \<br>
-         - Sim3770 
-         - SimNewJpsi
-         - SimJpsi
-         - Sim4180
-   
+	B) make jobs, only the reconstruction and simulation jobs can be made
+	- usage
+`SimJpsi [decay.card] [number of events]`
+
+	different type
+        - Sim3770 
+        - SimNewJpsi
+        - SimJpsi
+        - Sim4180
+
 
