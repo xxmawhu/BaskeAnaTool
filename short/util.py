@@ -2,6 +2,7 @@ import os
 import commands
 import sys
 import re
+import walksearch 
 #-----find only file in current dir:p
 def findfile(p):
     File = []
@@ -18,13 +19,12 @@ def findfile(p):
         File.sort()
         return File
     # p is a string, such as *.cxx
-    s = p.replace("*", "[a-zA-Z0-9]*")
+    s = p.replace("*", "[a-zA-Z0-9._]*")
     pattern = re.compile(s)
     for i in os.listdir("."):
         if pattern.match(i):
-            File += findfile(i)
-        File.sort()
-        return File
+            File.append(os.path.abspath(i))
+    File.sort()
     return File
 
 
@@ -41,18 +41,20 @@ def findtype(files, type = '.txt'):
 mypath=os.getcwd()
 path=os.listdir('.')
 #-----find all file in path 'p'
-def findfiler(p):
-    file=[]
-    if os.path.isfile(p):
-        file.append(os.path.abspath(p))
+def findfiler(p, Type = ".", r="r"):
+    if r != "r" :
+        return findfile(p)
+    File = []
+    if os.path.isfile(p) and Type in p:
+        File.append(os.path.abspath(p))
     else:
         path=[]
         for i in os.listdir(p):
             path.append(p+'/'+i)
         for i in path:
-            file.extend(findfiler(i))
-        file.sort()
-    return file
+            File.extend(findfiler(i, Type, r))
+    File.sort()
+    return File
 #-----end-------#
 #-------end-----------#
 
@@ -79,12 +81,12 @@ class heprm:
     def _getids(self):
         self._qstat()
         lines = self._stat.splitlines()
-        key = self._keyword.replace("*", "[a-zA-Z0-9]*")
+        key = self._keyword.replace("*", "[a-zA-Z0-9_.]*")
+        print("Delete jobs XXX "+self._keyword)
         pattern = re.compile(key)
         for i in lines:
             if pattern.findall(i) and not "JOBID" in i:
                 ID = float(i.split()[0])
-                # print ID
                 self._ids.append(int(ID)) 
     def run(self):
         self._getids()
@@ -130,4 +132,55 @@ def rootrun(files):
     os.system("chmod +x rootrun.sh")
     os.system('source '+mypath+'/'+'rootrun.sh')
     os.system('rm -f rootrun.sh')
+
+class jobCandidates:
+    def __init__(self):
+        self._jobList = []
+        self._opt = []
+        self._arv = []
+        self._diy={'sub':'boss.condor'}
+        self._Uasge = ""
+    def _prepare(self):
+        # devide the input into option and var
+        for i in range(1,len(sys.argv)):
+            if '=' in sys.argv[i]:
+                ss = sys.argv[i].split('=')
+                self._diy[ss[0]] = ss[1]
+                continue
+            elif '-' in sys.argv[i]:
+                self._opt.append(sys.argv[i])
+            else:
+                self._arv.append(sys.argv[i])
+        if len(self._arv) == 0 :
+            self._arv.append('.')
+        
+        if '-help' in self._opt or "--help" in self._opt:
+            print(self._Uasge)
+            return
+        
+        r = ""
+        self._jobList = []
+        if "-r" in self._opt:
+            r = "-r"
+        Type = []
+        if '-txt' in self._opt:
+            Type.append('.txt')
+        if '-c' in self._opt:
+            Type += ['.C', '.cc', '.cxx', '.cpp']
+        if '-sh' in self._opt:
+            Type += ['.sh', '.csh']
+        if '-py' in self._opt:
+            Type.append('.py')
+        #diy type
+        if 'type' in self._diy.keys():
+            Type += self._diy['type'].split(',')
+
+        for p in self._arv:
+            for t in Type:
+                self._jobList += walksearch.findfiler(p, t, r)
+
+    def run(self):
+        self._prepare()
+        return
+
 

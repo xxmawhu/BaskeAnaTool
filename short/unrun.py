@@ -1,60 +1,75 @@
+import util
+import walksearch
 import os
-from commands import getoutput as do
-import util as mf
+from util import jobCandidates
 from SubJob import hep
-import sys
-
 _USAGE = '''Usage:  without any option now
 Function:
     1) find all ".txt" and ".sh" file recursively
     2) try to find a log file assocaited with the ".txt" (or ".sh") file
     3) Once miss the log file, then resub this file 
 '''
+_USAGE = '''
+Usage:  [option] [file or path]
+Option: 
+    -c submit all the c++ file in the path, and execute it with ROOT,
+         First a .sh file will be made associated with a .c file
+         Then sub this .sh file to the server center
 
-if "-help" in sys.argv or "--help" in sys.argv:
-    print _USAGE
-    exit(0)
-#jobs=os.listdir('.')
-jobs=mf.findfiler('.')
-##########################
-#  BOSS job, type = .txt #
-##########################
-logCol=[]
-jobCol=[]
-for i in jobs:
-    if '.bosslog'==os.path.splitext(i)[1]:
-        logCol.append(i)
-    if '.txt'==os.path.splitext(i)[1]:
-        jobCol.append(i)
-list.sort(logCol)
-list.sort(jobCol)
-unrunTxtlist = []
-for i in jobCol:
-    if not i+".bosslog" in logCol:
-        unrunTxtlist.append(i)
-log = ""
-if os.path.exists("log"):
-    log="log/jobid"
-hep.Sub(unrunTxtlist, '.txt', log)
-###################
-# sim and rec job #
-###################
-simJobList=[]
-simJoblogs=[]
-for i in jobs:
-    if '.out.' in os.path.splitext(i)[0]:
-        fname = os.path.split(i)[1]  
-        logname = fname.split("sh")
-        simJoblogs.append(logname[0]+".sh.out")
-    if '.sh'==os.path.splitext(i)[1]:
-        simJobList.append(i)
-list.sort(simJobList)
-unrunShList=[]
-for i in simJobList:
-    jobname = os.path.split(i)[1]
-    nn = jobname.split('sh')[0]+'.sh'
-    if not nn+'.out' in simJoblogs:
-        unrunShList.append(i)
+    -sh Add x mod to the bash files, and submit all of them.
 
-hep.Sub(unrunShList, '.sh')
+    -txt Sub all .txt file with hep_contior
 
+    -r sub all file in this path
+    sub="hep_sub" can assign special sub command
+    exe="root -l - b -q" can set run command
+
+Path: the default path is ".", and you can special it as a path or a file.
+'''
+class hepsub(jobCandidates):
+    def __init__(self):
+        jobCandidates.__init__(self)
+        self._Uasge = _USAGE
+        self._diy['type'] = '.0, .bosslog'
+
+    def run(self):
+        self._prepare()
+#find the unruned job
+        shlog = []
+        txtlog = []
+        for i in self._jobList:
+            if walksearch.typeMatch(i, '.0') :
+                shlog.append(i)
+            elif walksearch.typeMatch(i, '.bosslog'):
+                txtlog.append(i)
+        for i in shlog:
+            jobname = os.path.split(i)[1]
+            nn = jobname.split('sh')[0]+'sh'
+            nn = os.path.abspath(nn)
+            #print nn
+            if nn in self._jobList:
+                self._jobList.remove(nn)
+        for i in txtlog:
+            jobname = os.path.split(i)[1]
+            nn = jobname.split('txt')[0]+'txt'
+            nn = os.path.abspath(nn)
+            if nn in self._jobList:
+                self._jobList.remove(nn)
+        nologjob = []
+        for i in self._jobList:
+            jobname = os.path.split(i)[1]
+            if not len(jobname.split('.')) >2:
+                nologjob.append(i)
+        self._jobList = nologjob
+
+        if 'sub' in self._diy.keys() and  not 'exe' in self._diy.keys():
+            hep.Sub(self._jobList, self._diy['sub'])
+        if  'exe' in self._diy.keys():
+            hep.SubDIY(self._jobList, self._diy['exe'])
+        if not 'sub' in self._diy.keys():
+            hep.smartSub(self._jobList)
+
+
+test = hepsub()
+test.run()
+exit()

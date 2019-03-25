@@ -1,28 +1,57 @@
 import os
 import progressbar
 from commands import getoutput
-def Sub(files, Type='.sh', logID=''):
+def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
     if len(files) == 0:
-        print("Sub All Jobs Successful!!!")
+        print("No Job found!!!")
         return
     list.sort(files)
     print("Sub %d jobs......"%(len(files)))
     for i in progressbar.progressbar(range(len(files))):
         JOB = os.path.split(files[i])
-        out=''
-        if Type==".sh":
-            getoutput("chmod +x %s"%(files[i]))
-            out=getoutput('cd %s; hep_sub -g physics %s'%(JOB[0], JOB[1]))
-        elif Type==".txt":
-            out=getoutput('cd %s; boss.condor %s'%(JOB[0], JOB[1]))
-            #print out
+        out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        #print out
         if logID!='':
             f=open(logID,  'a')
             f.write(out.split()[-1]+'\n')
             f.close()
     print("Sub All Jobs Successful!!!")
 
-def mkBash(afile):
+def smartSub(files, logID='.log'):
+    if len(files) == 0:
+        print("No Job found!!!")
+        return
+    list.sort(files)
+    print("Sub %d jobs......"%(len(files)))
+    for i in progressbar.progressbar(range(len(files))):
+        # path / file
+        JOB = os.path.split(files[i])
+        
+        #sub the job
+        if JOB[1].split('.')[-1] == 'txt':
+            subcommand = 'boss.condor'
+            out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        elif JOB[1].split('.')[-1] == 'sh':
+            subcommand = 'hep_sub -g physics'
+            out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
+            shName = mkBash(i, 'root -l -b -q')
+            JOB = os.path.split(shName)
+            subcommand = 'hep_sub -g physics'
+            out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        elif JOB[1].split('.')[-1] == 'py':
+            shName = mkBash(i, 'python')
+            JOB = os.path.split(shName)
+            subcommand = 'hep_sub -g physics'
+            out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        #print out
+        if logID!='':
+            f=open(logID,  'a')
+            f.write(out.split()[-1]+'\n')
+            f.close()
+
+
+def mkBash(afile, command="root -l -b -q"):
     #print afile
     Path=os.path.split(afile)[0]
     File=os.path.split(afile)[1]
@@ -31,28 +60,35 @@ def mkBash(afile):
     f=open(bashNm,'w')
     f.write('#!/bin/bash\n')
     f.write('cd '+ Path+'\n')
-    f.write('root -l -b -q '+File+'\n')
-    f.write('rm -f  '+name+'.sh\n')
+    f.write(command + File +'\n')
+    #f.write('rm -f  '+name+'.sh\n')
     f.close()
+    getoutput('chmod +x ' + bashNm)
     return bashNm
 
-def SubCxx(files, Type = '.cxx', logID=''):
-    if len(files) == 0:
-        print("No Jobs found!!!")
-        return
-    list.sort(files)
-    # make .bash file
-    bashCol = []
+#generate Bash file
+def genBashList(files, command='root -l -b -q'):
+    jobs = []
     for i in files:
-        bashCol.append(mkBash(i))
-    print("Sub %d jobs......"%(len(bashCol)))
-    for i in progressbar.progressbar(range(len(bashCol))):
-        JOB = os.path.split(bashCol[i])
-        out=''
-        getoutput("chmod +x %s"%(bashCol[i]))
-        out=getoutput('cd %s; hep_sub -g physics %s'%(JOB[0], JOB[1]))
-        if logID!='':
-            f=open(logID,  'a')
-            f.write(out.split()[-1]+'\n')
-            f.close()
-    print("Sub All Jobs Successful!!!")
+        jobs.append(mkBash(i, command))
+    jobs.sort()
+    return jobs
+
+def SubBash(jobs, logID='.log'):
+    Sub(jobs, 'hep_sub -g physics', logID)
+
+def SubBOSS(jobs, logID='.log'):
+    Sub(jobs, 'boss.condor', logID)
+
+
+def SubCxx(files, logID=''):
+    jobs = genBashList(files, 'root -l -b -q')
+    SubBash(jobs)
+
+def SubPy(files, logID=''):
+    jobs = genBashList(files, 'python')
+    SubBash(jobs)
+
+def SubDIY(files, command, logID=''):
+    jobs = genBashList(files, command)
+    SubBash(jobs)
