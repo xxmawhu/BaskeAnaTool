@@ -1,0 +1,36 @@
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+
+//***** job options for generator (KKMC) *****
+#include "$KKMCROOT/share/jobOptions_KKMC.txt"
+KKMC.CMSEnergy =  3.686;
+KKMC.BeamEnergySpread =  0.00092;
+KKMC.NumberOfEventPrinted =  1;
+KKMC.GeneratePsiPrime =  true;
+KKMC.RadiationCorrection =  1;
+KKMC.ThresholdCut =   3.9;
+
+//******* job options for EvtGen *****
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName = "/scratchfs/bes/maxx/Psi2S/LLPhi/PsiptoLambdaLambdabarPhi.dec";
+
+//*********job options for random number***
+BesRndmGenSvc.RndmSeed = 21000;
+
+//**************job options for detector simulation******************
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+//configure for calibration constants
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+// run ID used for this simulation
+RealizationSvc.RunIdList = {-25338,0,-27090};
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile = "/scratchfs/bes/maxx/Psi2S/LLPhi/12/raw/raw_0001.rtraw";
+
+//OUTPUT PRINTOUT LEVEL: (2=DEBUG, 3=INFO,4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel =  5;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 44;
+

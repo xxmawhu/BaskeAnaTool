@@ -1,0 +1,7 @@
+Particle vpho 4.180 0
+Decay vpho
+1.0  ConExc -100 94 95;
+Enddecay
+#
+End
+#

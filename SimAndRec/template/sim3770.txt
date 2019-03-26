@@ -1,0 +1,40 @@
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+#include "$RUNEVENTNUMBERALGROOT/share/jobOptions_RunEventNumber.txt"
+
+// ****** job options for generator (KKMC) ******
+#include "$KKMCROOT/share/jobOptions_KKMC.txt"
+KKMC.CMSEnergy = 3.773;
+KKMC.BeamEnergySpread=0.00097;
+KKMC.NumberOfEventPrinted=1;
+KKMC.GeneratePsi3770=true;
+KKMC.ThresholdCut=3.740;
+KKMC.ReadEcmsFromDB = 1;
+
+//*************job options for EvtGen***************
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+// ****** Input ******
+EvtDecay.userDecayTableName="/scratchfs/bes/kangxianwei/maxx/DEC/psi3770/Dp_phiomega.dec";
+EvtDecay.statDecays = true;
+
+//**************job options for random number************************
+BesRndmGenSvc.RndmSeed = 60011;
+
+//**************job options for detector simulation******************
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+//configure for calibration constants
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+// run ID
+RealizationSvc.RunIdList = {-11414,0,-13988,-14395,0,-14604,-20448,0,-23454};
+
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile="/scratchfs/bes/kangxianwei/maxx/rtraw/Dp_phiomega/sim_001.rtraw";
+
+// OUTPUT PRINTOUT LEVEL
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel  = 6;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 10000;

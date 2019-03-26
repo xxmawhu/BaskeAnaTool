@@ -1,0 +1,35 @@
+
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+
+// ****** job options for generator (KKMC) ******
+#include "$KKMCROOT/share/jobOptions_KKMC.txt"
+KKMC.CMSEnergy = 3.097;
+KKMC.BeamEnergySpread=0.0008;
+KKMC.NumberOfEventPrinted=1;
+KKMC.GenerateJPsi=true;
+
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+// ****** Input ******
+EvtDecay.userDecayTableName="/scratchfs/bes/kangxianwei/maxx/DEC/Jpsi/J_etamumu.dec";
+
+// ****** job options for detector simulation ******
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+// ****** job options of configure for calibration constants ******
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+
+
+//**************job options for random number************************
+BesRndmGenSvc.RndmSeed = 60001;
+
+
+RealizationSvc.RunIdList = {-9947,0,-10878, -27255, 0, -28236 };
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile="/scratchfs/bes/kangxianwei/maxx/rtraw/J_etamumu/sim_000.rtraw";
+// OUTPUT PRINTOUT LEVEL
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel  = 6;
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 10000;

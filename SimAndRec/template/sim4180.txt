@@ -1,0 +1,31 @@
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+//*************job options for EvtGen***************
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName = "DsSTDs.DEC";
+EvtDecay.ReadMeasuredEcms = true;
+EvtDecay.beamEnergySpread = 0.0012;
+EvtDecay.ParentParticle = "vpho";
+EvtDecay.statDecays = true;
+
+//**************job options for random number************************
+BesRndmGenSvc.RndmSeed = 100300;
+
+//**************job options for detector simulation******************
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+//configure for calibration constants
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+// run ID
+RealizationSvc.RunIdList = {43716,0,45105,45418,0,47066};
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile = "DsSTDs_round01_001_IHEP.rtraw";
+
+
+// OUTPUT PRINTOUT LEVEL
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel  = 6;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 500;
