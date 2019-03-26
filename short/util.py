@@ -151,8 +151,6 @@ class jobCandidates:
                 self._opt.append(sys.argv[i])
             else:
                 self._arv.append(sys.argv[i])
-        if len(self._arv) == 0 :
-            self._arv.append('.')
         
         if '-help' in self._opt or "--help" in self._opt:
             print(self._Uasge)
@@ -174,6 +172,8 @@ class jobCandidates:
         #diy type
         if 'type' in self._diy.keys():
             Type += self._diy['type'].split(',')
+        if len(Type) == 0 :
+            Type.append('')
 
         for p in self._arv:
             for t in Type:
