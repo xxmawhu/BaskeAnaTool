@@ -35,12 +35,12 @@ def smartSub(files, logID='.log'):
             subcommand = 'hep_sub -g physics'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
-            shName = mkBash(i, 'root -l -b -q')
+            shName = mkBash(files[i], 'root -l -b -q')
             JOB = os.path.split(shName)
             subcommand = 'hep_sub -g physics'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'py':
-            shName = mkBash(i, 'python')
+            shName = mkBash(files[i], 'python')
             JOB = os.path.split(shName)
             subcommand = 'hep_sub -g physics'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
@@ -56,11 +56,11 @@ def mkBash(afile, command="root -l -b -q"):
     Path=os.path.split(afile)[0]
     File=os.path.split(afile)[1]
     name=os.path.splitext(File)[0]
-    bashNm = os.path.join(Path, name+ '.sh')
+    bashNm = os.path.join(Path, File+ '.sh')
     f=open(bashNm,'w')
     f.write('#!/bin/bash\n')
     f.write('cd '+ Path+'\n')
-    f.write(command + File +'\n')
+    f.write(command + " " + File +'\n')
     #f.write('rm -f  '+name+'.sh\n')
     f.close()
     getoutput('chmod +x ' + bashNm)

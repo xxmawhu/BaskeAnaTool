@@ -109,7 +109,7 @@ def shrun(files):
     f.write('rm -f runSH.sh\n')
     f.close()
     os.chdir(mypath)
-    print( mypath)
+    print(mypath)
     os.system("chmod +x runSH.sh")
     os.system('source '+mypath+'/'+'runSH.sh')
 
@@ -138,7 +138,7 @@ class jobCandidates:
         self._jobList = []
         self._opt = []
         self._arv = []
-        self._diy={'sub':'boss.condor'}
+        self._diy={}
         self._Uasge = ""
     def _prepare(self):
         # devide the input into option and var
@@ -154,7 +154,7 @@ class jobCandidates:
         
         if '-help' in self._opt or "--help" in self._opt:
             print(self._Uasge)
-            return
+            exit()
         
         r = ""
         self._jobList = []
