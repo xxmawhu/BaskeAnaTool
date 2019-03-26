@@ -17,6 +17,33 @@ def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
             f.close()
     print("Sub All Jobs Successful!!!")
 
+# sub one job
+def smartSubOneJob(File, logID='.log'):
+    JOB = os.path.split(File)
+    #sub the job
+    if JOB[1].split('.')[-1] == 'txt':
+        subcommand = 'boss.condor'
+        out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+    elif JOB[1].split('.')[-1] == 'sh':
+        subcommand = 'hep_sub -g physics'
+        out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+    elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
+        shName = mkBash(File, 'root -l -b -q')
+        JOB = os.path.split(shName)
+        subcommand = 'hep_sub -g physics'
+        out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+    elif JOB[1].split('.')[-1] == 'py':
+        shName = mkBash(files[i], 'python')
+        JOB = os.path.split(shName)
+        subcommand = 'hep_sub -g physics'
+        out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        #print out
+    if logID!='':
+        f=open(logID,  'a')
+        f.write(out.split()[-1]+'\n')
+        f.close()
+
+#sub job list
 def smartSub(files, logID='.log'):
     if len(files) == 0:
         print("No Job found!!!")
@@ -26,7 +53,6 @@ def smartSub(files, logID='.log'):
     for i in progressbar.progressbar(range(len(files))):
         # path / file
         JOB = os.path.split(files[i])
-        
         #sub the job
         if JOB[1].split('.')[-1] == 'txt':
             subcommand = 'boss.condor'
