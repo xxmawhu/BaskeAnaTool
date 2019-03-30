@@ -67,7 +67,7 @@ class heprm:
         self._keyword='XXXX'
     def _getopt(self):
         for i in range(1, len(sys.argv)):
-            if '-' in sys.argv[i]:
+            if '-' == sys.argv[i][0]:
                 self._opt.append(sys.argv[i])
             else:
                 self._arv.append(sys.argv[i])
@@ -150,7 +150,7 @@ class jobCandidates:
                 ss = sys.argv[i].split('=')
                 self._diy[ss[0]] = ss[1]
                 continue
-            elif '-' in sys.argv[i]:
+            elif '-' == sys.argv[i][0]:
                 self._opt.append(sys.argv[i])
             else:
                 self._arv.append(sys.argv[i])
