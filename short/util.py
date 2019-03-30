@@ -81,7 +81,10 @@ class heprm:
     def _getids(self):
         self._qstat()
         lines = self._stat.splitlines()
-        key = self._keyword.replace("*", "[a-zA-Z0-9_.]*")
+        key = self._keyword
+        if key[0] == "*":
+            key = "[a-zA-Z0-9_]" + self._keyword
+        #key = self._keyword.replace("*", "[a-zA-Z0-9_-.]*")
         print("Delete jobs XXX "+self._keyword)
         pattern = re.compile(key)
         for i in lines:
