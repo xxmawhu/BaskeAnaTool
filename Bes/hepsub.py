@@ -17,7 +17,7 @@ class hepsub:
         self.jobcol= m.findtype(s,'.txt')
     def sub(self):
         self.findjob()
-        hep.Sub(self.jobcol, '.txt', self.log+'/jobid')
+        hep.Sub(self.jobcol, "boss.condor", '.txt', self.log+'/jobid')
         s='''# delete jobs
 from commands import getoutput as do
 f=open('jobid','r')
