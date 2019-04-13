@@ -1,4 +1,4 @@
-from Bes import boss
+from commands import getoutput
 import os
 import time
 class process():
@@ -55,7 +55,7 @@ class process():
             self.mkcxx()
         for i in self._cxxfile:
             print("running ... ", i)
-            boss.run(i)
+            print getoutput("root -l -b -q "+i)
 
     def mkcxx(self, name= "addBranch.cxx"):
         self._mk = True
