@@ -10,6 +10,7 @@ def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
     for i in progressbar.progressbar(range(len(files))):
         JOB = os.path.split(files[i])
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        #print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print out
         if logID!='':
             f=open(logID,  'a')
@@ -27,6 +28,7 @@ def smartSubOneJob(File, logID='.log'):
     elif JOB[1].split('.')[-1] == 'sh':
         subcommand = 'hep_sub -g physics'
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
+        print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
     elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
         shName = mkBash(File, 'root -l -b -q')
         JOB = os.path.split(shName)
@@ -53,12 +55,14 @@ def smartSub(files, logID='.log'):
     for i in progressbar.progressbar(range(len(files))):
         # path / file
         JOB = os.path.split(files[i])
+        #print JOB
         #sub the job
         if JOB[1].split('.')[-1] == 'txt':
             subcommand = 'boss.condor'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'sh':
             subcommand = 'hep_sub -g physics'
+            getoutput("chmod +x " + JOB[1])
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
             shName = mkBash(files[i], 'root -l -b -q')
