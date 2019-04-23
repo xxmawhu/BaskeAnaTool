@@ -1,5 +1,4 @@
 import os
-from nom import NUM
 from commands import getoutput as do
 class Sub:
     def __init__(self, sim=[], rec=[]):
@@ -18,10 +17,9 @@ class Sub:
         jobs = []
         for i in range(len(self._sim)):
             simpth = os.path.split(self._sim[i])[0]
+            _NUMFILE = os.path.join(curPth,".NUM")
+            NUM = int(do('cat %s'%(_NUMFILE)))+1
             NUM +=1 
-            do('echo "NUM=%d" > %s'%(NUM,\
-                "/besfs/users/maxx/home/head/num.py"))
-            name = 'simJob_%04d.sh'%(NUM)
             ff = os.path.join(simpth,name)
             jobs.append(ff)
             f = open(ff,'w')
