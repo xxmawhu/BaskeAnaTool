@@ -9,6 +9,7 @@ def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
     print("Sub %d jobs......"%(len(files)))
     for i in progressbar.progressbar(range(len(files))):
         JOB = os.path.split(files[i])
+        getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print out

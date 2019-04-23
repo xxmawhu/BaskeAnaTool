@@ -28,16 +28,16 @@ class process():
         if self._totEvts / 2E4 > maxjobs :
             self._numOfJob = maxjobs
         elif self._totEvts > 50E4:
-            self._numOfJob = int( self._totEvts / 2E4 )
+            self._numOfJob = int(self._totEvts / 2E4 )
         else:
             self._numOfJob = int(self._totEvts / 1E4)
         if self._numOfJob==0:
             self._numOfJob = 1
         print "The total jobs is \t", int(self._numOfJob)
         util.mkdir(self._datPth)
-        self._subPth =  os.path.join(self._datPth, "sub")
-        self._rawPth =  os.path.join(self._datPth, "raw")
-        self._dstPth =  os.path.join(self._datPth, "dst")
+        self._subPth = os.path.join(self._datPth, "sub")
+        self._rawPth = os.path.join(self._datPth, "raw")
+        self._dstPth = os.path.join(self._datPth, "dst")
         util.mkdir(self._dstPth)
         util.mkdir(self._rawPth)
         util.mkdir(self._subPth)
