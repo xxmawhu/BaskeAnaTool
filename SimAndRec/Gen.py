@@ -11,16 +11,21 @@ class process:
         self._simff = os.path.join(pth, self._simff)
         self._recff = os.path.join(pth, self._recff)
         f=open(ffName,'w')
-        ss = 'import SimRecAna\n'
+        ss = 'from SimAndRec import SimRecAna\n'
+        ss += 'from SimAndRec import util\n'
+        ss += "opt='''//test'''\n"
         ss += 'svc = SimRecAna.process("%s","%s")\n'\
                 %(self._simff,self._recff)
-        ss += 'svc.Make()\n'
-        ss += 'svc.Sub()\n'
+        ss += 'svc.SetOpt(opt)\n'
+        ss += '''if len(util.getArv()) ==0:
+    svc.Make()
+    svc.Sub()
+    exit(0)
+elif '-make' in util.getArv() :
+    svc.Make()
+    exit(0)
+        '''
         f.write(ss)
-        f.close()
-        f=open("setup.sh","a+")
-        alias = 'alias Sim%s="python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
-        f.write(alias+'\n')
         f.close()
     
     
