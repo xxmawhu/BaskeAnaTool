@@ -47,7 +47,19 @@ def hepsub(files):
             os.chdir(mypath)
         os.chdir(mypath)#return to my work path
 def getOpt():
-    return sys.argv[1:]
+    rs = []
+    for i in sys.argv:
+        if '-' == i[0]:
+            continue
+        rs.append(i)
+    return rs[1:]
+
+def getArv():
+    rs = []
+    for i in sys.argv:
+        if '-' == i[0]:
+            rs.append(i)
+    return rs
 def MaxJobs():
     num =  do("hep_q -u | wc -l")
     if num == "":

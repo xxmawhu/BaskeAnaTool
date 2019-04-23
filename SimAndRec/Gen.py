@@ -32,10 +32,16 @@ class process:
         self._recff = os.path.join(pth, self._recff)
         f=open(ffName,'w')
         ss = 'import SimAndRec\n'
-        ss += 'svc = SimAndRec.process("%s","%s")\n'\
-                %(self._simff,self._recff)
-        ss += 'svc.Make()\n'
-        ss += 'svc.Sub()\n'
+        ss += 'import util\n'
+        ss += 'svc = SimAndRec.process("%s","%s")\n'%(self._simff,self._recff)
+        ss += '''if len(util.getArv()) ==0:
+    svc.Make()
+    svc.Sub()
+    exit(0)
+elif '-make' in util.getArv() :
+    svc.Make()
+    exit(0)
+        '''
         f.write(ss)
         f.close()
         f=open("setup.sh","a+")
