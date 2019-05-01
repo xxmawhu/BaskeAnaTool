@@ -12,7 +12,7 @@ def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
         getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
-        #print out
+        print out
         if logID!='':
             f=open(logID,  'a')
             f.write(out.split()[-1]+'\n')
@@ -27,6 +27,7 @@ def smartSubOneJob(File, logID='.log'):
         subcommand = 'boss.condor'
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
     elif JOB[1].split('.')[-1] == 'sh':
+        out = getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
         subcommand = 'hep_sub -g physics'
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
@@ -63,17 +64,19 @@ def smartSub(files, logID='.log'):
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'sh':
             subcommand = 'hep_sub -g physics'
-            getoutput("chmod +x " + JOB[1])
+            getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
             shName = mkBash(files[i], 'root -l -b -q')
             JOB = os.path.split(shName)
             subcommand = 'hep_sub -g physics'
+            getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'py':
             shName = mkBash(files[i], 'python')
             JOB = os.path.split(shName)
             subcommand = 'hep_sub -g physics'
+            getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print out
         if logID!='':
