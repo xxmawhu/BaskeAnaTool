@@ -84,18 +84,45 @@ class heprm:
         key = self._keyword
         if key[0] == "*":
             key = "[a-zA-Z0-9_]" + self._keyword
-        #key = self._keyword.replace("*", "[a-zA-Z0-9_-.]*")
-        print("Delete jobs XXX "+self._keyword)
+        key = self._keyword.replace("*", "[a-zA-Z0-9._]*")
+        print("Inf::Delete jobs ==> "+self._keyword)
         pattern = re.compile(key)
         for i in lines:
-            if pattern.findall(i) and not "JOBID" in i:
+            if "JOBID" in i or len(i.split()) < 1:
+                continue
+            if pattern.findall(i):
                 ID = float(i.split()[0])
+                #print key, pattern, i
                 self._ids.append(int(ID)) 
     def run(self):
         self._getids()
         for i in self._ids:
             os.system('hep_rm '+str(i))
 
+class hep_q(heprm):
+    """get the state information with key word"""
+    def __init__(self):
+        heprm.__init__(self)
+    def run(self):
+        self._getids()
+        total = 0
+        idl = 0
+        R = 0
+        for l in self._stat.split('\n')[:-2]:
+            ll = l.split()
+            if len(ll) <1 or ll[0] == "JOBID":
+                continue
+            aid = int(float(ll[0]))
+            if aid in self._ids:
+                total += 1
+                if "I" in ll:
+                    idl += 1
+                if "R" in ll:
+                    R += 1
+                print l
+        print total,"jobs;", idl, "idle,", R, "running"
+
+        
 def shrun(files):
     """ 
     Running all bash and cpp files 
