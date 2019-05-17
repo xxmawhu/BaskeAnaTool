@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
 # -*- coding: utf-8 -*-
 import os
 import sys

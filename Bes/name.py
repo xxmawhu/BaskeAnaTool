@@ -1,3 +1,5 @@
+#!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
+# -*- coding: utf-8 -*-
 # useful function
 def name(dsts,m):
     name=[]
