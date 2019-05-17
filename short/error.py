@@ -20,10 +20,13 @@ for i in jobs:
 list.sort(log)
 for i in log:
     f=open(i,'r')
-    s=f.read()
-    if 'INFO Application Manager Finalized successfully' in s:
-        continue
-    else:
+    lines =f.readlines()
+    AMFS = False
+    for l in lines[-5:]
+        if 'INFO Application Manager Finalized successfully' in l:
+            AMFS = True
+            break
+    if AMFS:
         print i[0:len(i)-8]
     f.close()
 print("process is done.")

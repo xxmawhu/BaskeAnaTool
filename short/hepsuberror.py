@@ -45,19 +45,23 @@ for i in jobCol:
         IDList.append(sublog.split()[-1]+'\n')
 for i in logList:
     f=open(i,'r')
-    s=f.read()
-    if 'INFO Application Manager Finalized successfully' in s:
-        continue
-    else:
+    lines =f.readlines()
+    AMFS = False
+    for l in lines[-5:]
+        if 'INFO Application Manager Finalized successfully' in l:
+            AMFS = True
+            break
+    if AMFS:
         print i[0:len(i)-8]
         job = os.path.split(i[0:len(i)-8])[1]
         pth = os.path.split(i[0:len(i)-8])[0]
         print("rm %s/%s.boss*"%(pth, job))
         do("rm %s/%s.boss*"%(pth, job))
-        print "cd "+pth
-        print 'boss.condor '+job
-        print "cd -"
+        #print "cd "+pth
+        #print 'boss.condor '+job
+        #print "cd -"
         sublog = do("cd "+pth+'&& boss.condor '+job)
+        print sublog
         IDList.append(sublog.split()[-1]+'\n')
     f.close()
 
