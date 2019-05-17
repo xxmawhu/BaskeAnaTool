@@ -36,39 +36,27 @@ for i in jobCol:
     if "jobid" in i:
         continue
     if not i + ".bosslog" in logCol:
-        print i
         job = os.path.split(i)[1]
         pth = os.path.split(i)[0]
         #print "jobs ", job
         #print "path", pth
         sublog= do("cd "+pth+'&& boss.condor '+job)
         IDList.append(sublog.split()[-1]+'\n')
+errorList=[]
 for i in logList:
     f=open(i,'r')
     lines =f.readlines()
     AMFS = False
-    for l in lines[-5:]
-        if 'INFO Application Manager Finalized successfully' in l:
+    for l in lines[-5:]:
+        if 'Finalized successfully' in l:
             AMFS = True
             break
-    if AMFS:
-        print i[0:len(i)-8]
-        job = os.path.split(i[0:len(i)-8])[1]
-        pth = os.path.split(i[0:len(i)-8])[0]
-        print("rm %s/%s.boss*"%(pth, job))
-        do("rm %s/%s.boss*"%(pth, job))
-        #print "cd "+pth
-        #print 'boss.condor '+job
-        #print "cd -"
-        sublog = do("cd "+pth+'&& boss.condor '+job)
-        print sublog
-        IDList.append(sublog.split()[-1]+'\n')
     f.close()
+    if not AMFS:
+        errorList.append(i[:-8])
 
-if os.path.exists('log'):
-    fid = open('log/jobid', 'a')
-    for i in IDList:
-        fid.write(i)
-    fid.close()
-
-print("process is done.")
+from SubJob import hep
+print "Inf:: total", len(errorList), "jobs fail"
+for j in errorList:
+    do("rm %s.*"%(j))
+hep.Sub(errorList)

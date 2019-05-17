@@ -18,16 +18,17 @@ for i in jobs:
     if '.bosslog'==os.path.splitext(i)[1]:
         log.append(i)
 list.sort(log)
+errsize=0
 for i in log:
     f=open(i,'r')
     lines =f.readlines()
     AMFS = False
-    for l in lines[-5:]
-        if 'INFO Application Manager Finalized successfully' in l:
+    for l in lines[-5:]:
+        if 'Finalized successfully' in l:
             AMFS = True
             break
-    if AMFS:
-        print i[0:len(i)-8]
     f.close()
-print("process is done.")
-
+    if not AMFS:
+        errsize += 1
+        print i[0:-8]
+print "Done: ", errsize, "jobs fail"
