@@ -7,6 +7,8 @@ OutPut(name): set the name of the out file after add some mass tuples
 Add(name of tuple, some expresion): the expresion is some operate on the p4
 momentum, such as p4.M(), p4.Angel(p4_1.Vect()), p4.CosTheta()
 
+the momentum of (e+e-) is P4beam
+
 '''
 pr = addMass.process()
 pr.SetRawRoot("../mode/sig_all.root")
