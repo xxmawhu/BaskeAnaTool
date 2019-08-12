@@ -23,7 +23,7 @@ Path: the default path is ".", and you can special it as a path or a file.
 opt = []
 arv = []
 #------get the option----------
-for i in range(1,len(sys.argv)):
+for i in range(1, len(sys.argv)):
     if '-' in sys.argv[i]:
         opt.append(sys.argv[i])
     else:
@@ -60,12 +60,12 @@ if '-txt' in opt:
     hep.Sub(jobcol)
 
 if '-sh' in opt:
-    jobcol = m.findtype(s,'.sh')
+    jobcol = m.findtype(s, '.sh')
     hep.Sub(jobcol)
 
 if '-c' in opt:
-    cjobcol = m.findtype(s,'.C')
-    cjobcol += m.findtype(s,'.cxx') 
+    cjobcol = m.findtype(s, '.C')
+    cjobcol += m.findtype(s, '.cxx')
     cjobcol += m.findtype(s, ".cc")
     cjobcol += m.findtype(s, ".cpp")
     if len(cjobcol) > 0:

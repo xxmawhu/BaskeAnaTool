@@ -10,6 +10,7 @@
 #include "$ESTIMEALGROOT/share/job_EsTimeAlg.txt"
 
 // PAT+TSF+HOUGH method for MDC reconstruction
+#include "$MDCXRECOROOT/share/jobOptions_MdcPatTsfRec.txt"
 #include "$MDCHOUGHFINDERROOT/share/jobOptions_MdcPatTsfHoughRec.txt"
 
 #include "$KALFITALGROOT/share/job_kalfit_numf_data.txt"

@@ -14,30 +14,30 @@ if "-help" in sys.argv or "--help" in sys.argv:
     print(_USAGE)
     exit(0)
 
-opt=[]
-arv=[]
+opt = []
+arv = []
 #------get the option----------
-for i in range(1,len(sys.argv)):
-    if('-' in sys.argv[i]):
+for i in range(1, len(sys.argv)):
+    if ('-' in sys.argv[i]):
         opt.append(sys.argv[i])
     else:
         arv.append(sys.argv[i])
 #---------end ------------
 #
 ##--------------------------
-mypath=os.getcwd()
+mypath = os.getcwd()
 if '-r' in opt:
-    s=util.findfiler('.')
+    s = util.findfiler('.')
 else:
-    s=util.findfile('.')
+    s = util.findfile('.')
 #------find all jobs
 jobcol = []
-name=""
-if len(arv) !=0:
-    name=arv[0]
+name = ""
+if len(arv) != 0:
+    name = arv[0]
 else:
     if "-sh" in opt:
-        name=".sh"
+        name = ".sh"
 for i in s:
     if name in i:
         jobcol.append(i)

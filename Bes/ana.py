@@ -67,7 +67,12 @@ class ana:
         self.mkdir()
         f=open(self.log+'list.txt','w')
         for i in self.dsts:
-            for j in myfun.findfile(i):
+            fileList = myfun.findfile(i)
+            #print (i)
+            if len(fileList) == 0:
+                print ("no dst in this file, " + i)
+                continue
+            for j in fileList:
                 f.write(j+'\n')
         f.close()
         self.mkdir()

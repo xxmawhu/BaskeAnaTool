@@ -69,8 +69,11 @@ class zeus:
                 f.write(self._value[i])
                 continue
             if _type== "class":
-                _line = self._class[i]+"."+self._member[i]
-                _line += self._operator[i]+self._value[i]+'\n'
+                _line = self._class[i] + "." + self._member[i]
+                _line += " " + self._operator[i] + " " + self._value[i]
+                if not ";" in self._value[i]:
+                    _line += ';'
+                _line += '\n'
                 f.write(_line)
                 continue
         f.close()
@@ -83,7 +86,7 @@ class zeus:
         self.SetOpt('RealizationSvc', 'RunIdList ',str(runList),"=")
     def SetSeed(self, seed):
         self.SetOpt('BesRndmGenSvc', 'RndmSeed',str(seed)+';',"=")
-    def SimOutputFile(self,output):
+    def SimOutputFile(self, output):
         self.SetOpt('RootCnvSvc', 'digiRootOutputFile',\
                 '"%s";'%(output) ,"=")
     def RecOutputFile(self,output):

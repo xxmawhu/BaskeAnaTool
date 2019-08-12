@@ -2,7 +2,7 @@ import os
 import sys
 import commands
 from util import hep_q
-_USAGE='''Heprm [keyword]
+_USAGE = '''Heprm [keyword]
 keyword: 1) jobId, or part of the jobId, for example
             Heprm 34222, will cancle all jobs with 34222 in the jobId,
             such as 8883422, 3422888, 88342288, etc.

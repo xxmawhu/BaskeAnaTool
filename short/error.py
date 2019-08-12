@@ -12,16 +12,16 @@ if "-help" in sys.argv or "--help" in sys.argv:
     print _USAGE
     exit(0)
 #jobs=os.listdir('.')
-jobs=mf.findfiler('.')
-log=[]
+jobs = mf.findfiler('.')
+log = []
 for i in jobs:
-    if '.bosslog'==os.path.splitext(i)[1]:
+    if '.bosslog' == os.path.splitext(i)[1]:
         log.append(i)
 list.sort(log)
-errsize=0
+errsize = 0
 for i in log:
-    f=open(i,'r')
-    lines =f.readlines()
+    f = open(i, 'r')
+    lines = f.readlines()
     AMFS = False
     for l in lines[-5:]:
         if 'Finalized successfully' in l:

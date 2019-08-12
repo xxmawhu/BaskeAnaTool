@@ -1,6 +1,6 @@
 // Copyright (c) 2019-2-26 maxx
 #include "bes3plotstyle_1.C"
-void dE_mc() {
+void dE_mc(double a = 0) {
     SetStyle();
     gStyle->SetPadRightMargin(0.15);
 
@@ -32,20 +32,20 @@ void dE_mc() {
     TH1D* hqq = new TH1D("hqq", "#Delta E", 50, -0.1, 0.1);
     TH1D* htt = new TH1D("htt", "#Delta E", 50, -0.1, 0.1);
     TH1D* hnonD = new TH1D("hnonD", "#Delta E", 50, -0.1, 0.1);
-    chDpDm.Project("hsig",  "deltaE", "");
-    chD0D0.Project("hD0",  "deltaE", "");
-    chgJ.Project("hgJ",  "deltaE", "");
-    chgP.Project("hgP",  "deltaE", "");
-    chqq.Project("hqq",  "deltaE", "");
-    chtt.Project("htt",  "deltaE", "");
-    chnonD.Project("hnonD",  "deltaE", "");
-    hqq->Scale(1/7.5);
-    hsig->Scale(1/10.0);
-    htt->Scale(1/10.0);
-    hD0->Scale(1/10.0);
-    hnonD->Scale(1/10.0);
-    hgJ->Scale(1/10.0);
-    hgP->Scale(1/10.0);
+    chDpDm.Project("hsig", "deltaE", "");
+    chD0D0.Project("hD0", "deltaE", "");
+    chgJ.Project("hgJ", "deltaE", "");
+    chgP.Project("hgP", "deltaE", "");
+    chqq.Project("hqq", "deltaE", "");
+    chtt.Project("htt", "deltaE", "");
+    chnonD.Project("hnonD", "deltaE", "");
+    hqq->Scale(1 / 7.5);
+    hsig->Scale(1 / 10.0);
+    htt->Scale(1 / 10.0);
+    hD0->Scale(1 / 10.0);
+    hnonD->Scale(1 / 10.0);
+    hgJ->Scale(1 / 10.0);
+    hgP->Scale(1 / 10.0);
     // hnonD, htt, hqq, hgP, hgJ, hD0, hsig
     htt->Add(hnonD);
     hgP->Add(htt);
@@ -54,14 +54,13 @@ void dE_mc() {
     hqq->Add(hD0);
     hsig->Add(hqq);
 
-
-    TCanvas* c = new TCanvas("c", "", 800,  600);
+    TCanvas* c = new TCanvas("c", "", 800, 600);
     hsig->GetXaxis()->SetTitle("#Delta E (GeV)");
     hsig->GetYaxis()->SetTitle("Events/4 MeV");
     // hsig->GetYaxis()->SetTitle("Events ( 20 MeV^{-1}c^{2})");
     FormatAxis(hsig->GetYaxis());
     FormatAxis(hsig->GetXaxis());
-    hsig->SetMaximum(hsig->GetMaximum()/0.8);
+    hsig->SetMaximum(hsig->GetMaximum() / 0.8);
     hsig->SetMinimum(0.0);
     TGaxis* xaxis = reinterpret_cast<TGaxis*>(hsig->GetYaxis());
     xaxis->SetMaxDigits(3);
@@ -78,14 +77,14 @@ void dE_mc() {
     hsig->SetLineColor(kRed);
     hqq->SetFillColor(kOrange);
     hqq->SetLineColor(kOrange);
-    hD0->SetFillColor(kOrange-3);
-    hD0->SetLineColor(kOrange-3);
+    hD0->SetFillColor(kOrange - 3);
+    hD0->SetLineColor(kOrange - 3);
     hgP->SetFillColor(kTeal);
     hgP->SetLineColor(kTeal);
-    hgJ->SetFillColor(kGreen+1);
-    hgJ->SetLineColor(kGreen+1);
-    htt->SetFillColor(kPink+10);
-    htt->SetLineColor(kPink+10);
+    hgJ->SetFillColor(kGreen + 1);
+    hgJ->SetLineColor(kGreen + 1);
+    htt->SetFillColor(kPink + 10);
+    htt->SetLineColor(kPink + 10);
     hnonD->SetFillColor(kBlue);
     hnonD->SetLineColor(kBlue);
 
@@ -98,14 +97,14 @@ void dE_mc() {
     hnonD->Draw("same");
     c->RedrawAxis();
 
-    TLegend *leg = new TLegend(0.68, 0.6, 0.86, 0.85 );
-    leg->AddEntry(hsig  , "D^{+}D^{-}");
-    leg->AddEntry(hqq   , "q#bar{q}");
-    leg->AddEntry(hD0   , "D^{0}#bar{D^{0}}");
+    TLegend* leg = new TLegend(0.68, 0.6, 0.86, 0.85);
+    leg->AddEntry(hsig, "D^{+}D^{-}");
+    leg->AddEntry(hqq, "q#bar{q}");
+    leg->AddEntry(hD0, "D^{0}#bar{D^{0}}");
     // leg->AddEntry(hgP   , "#gamma #psi");
-    leg->AddEntry(hgJ   , "#gamma J/#psi");
-    leg->AddEntry(htt   , "#tau#tau");
-    leg->AddEntry(hnonD , "none-D#bar{D}");
+    leg->AddEntry(hgJ, "#gamma J/#psi");
+    leg->AddEntry(htt, "#tau#tau");
+    leg->AddEntry(hnonD, "none-D#bar{D}");
     Format(leg);
     leg->Draw();
     // if you want draw an arrow , add the following statements

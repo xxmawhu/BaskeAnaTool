@@ -36,7 +36,7 @@ def hepsub(files):
     return
     if len(files)>0:
         mypath=os.getcwd()
-        print "current path\t",mypath
+        print ("current path\t",mypath)
         for i in files:
             path=os.path.split(i)[0]
             File=os.path.split(i)[1]
