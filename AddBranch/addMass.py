@@ -115,8 +115,11 @@ class process():
 
         for i in self._input:
             if 'beam' in i:
+                i = i.replace("P4", "_P4")
                 s += tab + tab + i;
-                s += ' = TLorentzVector(2*0.011*beamE,0,0,2*beamE);'
+                #print (s)
+                #print (i)
+                s += ' = TLorentzVector(2*0.011*beamE,0,0,2*beamE);\n'
             elif "P4" in i :
                 newp4 = i.replace("P4","_P4")
                 s += tab + tab + '%s = TLorentzVector(%s);\n'%(newp4, i)
