@@ -1,5 +1,10 @@
 SIMANDRECDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 #python config.py ; 
+#if [ -f .NUM  ] 
+#then 
+#    cat .NUM
+#fi
+#exit
 echo "NUMFILE='$SIMANDRECDIR/.NUM'" > $SIMANDRECDIR/NUM.py
 alias Sim3770="python ${SIMANDRECDIR}/init3770.py"
 alias SimNewJpsi="python ${SIMANDRECDIR}/initNewJpsi.py"
