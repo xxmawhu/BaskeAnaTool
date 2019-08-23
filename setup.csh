@@ -6,7 +6,7 @@ else
 	set script_dir=`readlink -f $0` 
 endif 
 
-set BaskDIR=`dirname $script_dir`
+setenv BaskDIR `dirname $script_dir`
 
 setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 #source ${BaskDIR}/cpplint/setup.sh
