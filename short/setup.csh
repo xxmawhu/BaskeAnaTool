@@ -8,7 +8,7 @@ endif
 
 set SHORTDIR=`dirname $script_dir`
 
-setenv LD_LIBRARY_PATH $LD_LIBRARY_PATH:/scratchfs/bes/sunhk/6.6.4.p01/libssl/usr/lib
+setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/scratchfs/bes/sunhk/6.6.4.p01/libssl/usr/lib
 set Hepsub='python2 ${SHORTDIR}/hepsubnew.py'
 set Heprm='python2 ${SHORTDIR}/Heprm.py'
 set Hep_q='python2 ${SHORTDIR}/Hep_q.py'
