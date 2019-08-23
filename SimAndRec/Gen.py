@@ -65,7 +65,7 @@ elif '-make' in util.getArv() :
             if "Sim%s"%(self._name) in line:
                 continue
             setup_tcsh += line 
-        setup_tcsh +=  'setenv Sim%s "python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
+        setup_tcsh +=  'alias Sim%s "python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
         f = open("setup.csh", 'w')
         f.write(setup_tcsh+'\n')
         f.close()
