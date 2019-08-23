@@ -1,12 +1,12 @@
 #得到当前脚本的绝对路径
 set called=($_) 
 if("$called" != " ") then 
-	set script_dir=`readlink -f $called[2]` 
+	set simAndRec_dir=`readlink -f $called[2]` 
 else 
-	set script_dir=`readlink -f $0` 
+	set simAndRec_dir=`readlink -f $0` 
 endif 
 
-setenv SIMANDRECDIR `dirname $script_dir`
+setenv SIMANDRECDIR `dirname $simAndRec_dir`
 echo "NUMFILE='$SIMANDRECDIR/.NUM'" > $SIMANDRECDIR/NUM.py
 alias SimPsi2S "python ${SIMANDRECDIR}/initPsi2S.py"
 alias Sim3770 "python ${SIMANDRECDIR}/init3770.py"

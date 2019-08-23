@@ -1,12 +1,12 @@
 #得到当前脚本的绝对路径
 set called=($_) 
 if("$called" != " ") then 
-	set script_dir=`readlink -f $called[2]` 
+	set short_dir=`readlink -f $called[2]` 
 else 
-	set script_dir=`readlink -f $0` 
+	set short_dir=`readlink -f $0` 
 endif 
 
-setenv SHORTDIR `dirname $script_dir`
+setenv SHORTDIR `dirname $short_dir`
 
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/scratchfs/bes/sunhk/6.6.4.p01/libssl/usr/lib
 alias Hepsub 'python2 ${SHORTDIR}/hepsubnew.py'
