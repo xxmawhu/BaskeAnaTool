@@ -8,7 +8,7 @@ endif
 
 set BaskDIR=`dirname $script_dir`
 
-export PYTHONPATH=${BaskDIR}:$PYTHONPATH
+setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 #source ${BaskDIR}/cpplint/setup.sh
 source ${BaskDIR}/short/setup.csh
 source ${BaskDIR}/SimAndRec/setup.csh
