@@ -10,5 +10,6 @@ setenv BaskDIR `dirname $BasketAnaTool_dir`
 
 setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 #source ${BaskDIR}/cpplint/setup.sh
-source ${BaskDIR}/short/setup.csh
-source ${BaskDIR}/SimAndRec/setup.csh
+
+cd ${BaskDIR}/SimAndRec && source setup.csh && cd -
+cd ${BaskDIR}/short/ && source setup.csh && cd -
