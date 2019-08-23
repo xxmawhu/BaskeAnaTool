@@ -12,3 +12,5 @@ setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 
 source ${BaskDIR}/SimAndRec/setup.csh
 source ${BaskDIR}/short/setup.csh
+#use this python
+source /workfs/bes/maxx/local/python-2.7.14/setup.csh
