@@ -1,12 +1,4 @@
-#得到当前脚本的绝对路径
-set called=($_) 
-if("$called" != " ") then 
-	set simAndRec_dir=`readlink -f $called[2]` 
-else 
-	set simAndRec_dir=`readlink -f $0` 
-endif 
-
-setenv SIMANDRECDIR `dirname $simAndRec_dir`
+setenv SIMANDRECDIR "${BaskDIR}/SimAndRec"
 echo "NUMFILE='$SIMANDRECDIR/.NUM'" > $SIMANDRECDIR/NUM.py
 alias SimPsi2S "python ${SIMANDRECDIR}/initPsi2S.py"
 alias Sim3770 "python ${SIMANDRECDIR}/init3770.py"
