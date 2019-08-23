@@ -1,0 +1,43 @@
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+
+//*************job options for generator (KKMC)***************
+#include "$KKMCROOT/share/jobOptions_KKMC.txt"
+KKMC.CMSEnergy = 4.130;
+KKMC.BeamEnergySpread=0.0019;
+KKMC.GeneratePsi4260 = true;
+KKMC.ThresholdCut =  4.00;
+KKMC.NumberOfEventPrinted=10;
+KKMC.RadiationCorrection = 1;
+KKMC.TagISR = 1;
+KKMC.TagFSR = 1;
+KKMC.ModeIndexExpXS = -2;
+
+//*************job options for EvtGen***************
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName = "pppbarpbar.dec";
+EvtDecay.statDecays = true;
+
+//**************job options for random number************************
+BesRndmGenSvc.RndmSeed = 100;
+
+//**************job options for detector simulation******************
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+
+//configure for calibration constants
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+
+//please add this line if there is no luminosity and vertex info for this run
+RealizationSvc.IfUseDB = false;
+// run ID
+RealizationSvc.RunIdList = {-59163, 0, -59573};
+
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile = "sim_00.rtraw";
+
+// OUTPUT PRINTOUT LEVEL
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel  = 6;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = 10000;
+

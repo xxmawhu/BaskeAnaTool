@@ -1,6 +1,6 @@
 import SimAndRec
 import util
-svc =SimAndRec.process("/besfs/users/maxx/local/BaskeAnaTool/SimAndRec/template/simPsi2S.txt","/besfs/users/maxx/local/BaskeAnaTool/SimAndRec/template/recPsi2S.txt")
+svc = SimAndRec.process("/besfs/users/maxx/local/BaskeAnaTool/SimAndRec/template/simPsi2S.txt","/besfs/users/maxx/local/BaskeAnaTool/SimAndRec/template/recJpsi.txt")
 if len(util.getArv()) ==0:
     svc.Make()
     svc.Sub()

@@ -49,7 +49,23 @@ elif '-make' in util.getArv() :
         '''
         f.write(ss)
         f.close()
-        f=open("setup.sh","a+")
-        alias = 'alias Sim%s="python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
-        f.write(alias+'\n')
+        setup_bash = ''
+        for line in open("setup.sh").readlines():
+            if "Sim%s"%(self._name) in line:
+                continue
+            setup_bash += line 
+        setup_bash +=  'alias Sim%s="python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
+        #print (setup_bash)
+        f = open("setup.sh", 'w')
+        f.write(setup_bash+'\n')
+        f.close()
+        
+        setup_tcsh = ''
+        for line in open("setup.csh").readlines():
+            if "Sim%s"%(self._name) in line:
+                continue
+            setup_tcsh += line 
+        setup_tcsh +=  'set Sim%s="python ${SIMANDRECDIR}/init%s.py"'%(self._name, self._name)
+        f = open("setup.csh", 'w')
+        f.write(setup_tcsh+'\n')
         f.close()
