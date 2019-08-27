@@ -46,7 +46,6 @@ Hepsub有选项可以控制提交何种作业
    * root -l -b -q fit.C 
 
 随后这个Bash文件将被提交，间接实现用‘root’执行此文件。
-
     * exe="command" 这个选项用来指定执行方式
 
 
@@ -55,7 +54,8 @@ Hepsub有选项可以控制提交何种作业
 对每个对撞能区，都有不同的命令来批量的生成模拟文件，并提交。每个命令都是有同一个
 基类派生出来。对于暂时没有考虑到的模拟情况，我们设置了一个脚本，只有把任何一个模拟的
 模板放进去，都会自动生成相应的命令。以Jpsi的模拟为例，典型的用法如下：
-    SimJpsi [decay.card] [number of events]
+     SimJpsi [decay.card] [number of events]
+
 第一个参数为模拟需要的卡片，第二个参数为期望模型的事例数。
 除了模拟为，还有如下的默认命令:
     * Sim3770 
@@ -66,10 +66,11 @@ Hepsub有选项可以控制提交何种作业
 ### 添加新的模拟类型
 需要准备好模拟和重建样板，比如: template/simExample.txt 和
 template/recExample.txt, 在SimAndRec下，修改gen.py
-    name = "Example"
-    simff="template/simExample.txt"
-    recff="template/recExample.txt"
-    import Gen
-    g = Gen.process(name, simff, recff)
-    g.Make()
+     name = "Example"
+     simff="template/simExample.txt"
+     recff="template/recExample.txt"
+     import Gen
+     g = Gen.process(name, simff, recff)
+     g.Make()
+
 执行即可。
