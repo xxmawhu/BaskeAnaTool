@@ -65,11 +65,13 @@ Hepsub有选项可以控制提交何种作业
 ### 添加新的模拟类型
 需要准备好模拟和重建样板，比如: template/simExample.txt 和
 template/recExample.txt, 在SimAndRec下，修改gen.py
-         name = "Example"
-         simff="template/simExample.txt"
-         recff="template/recExample.txt"
-         import Gen
-         g = Gen.process(name, simff, recff)
-         g.Make()
+```python
+name = "Example"
+simff="template/simExample.txt"
+recff="template/recExample.txt"
+import Gen
+g = Gen.process(name, simff, recff)
+g.Make()
+```
 
 执行即可。
