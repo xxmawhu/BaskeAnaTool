@@ -4,11 +4,14 @@ import sys
 import re
 #Type match
 def typeMatch(i, Type):
+    #print "typeMatch now"
+    #print "file:", i
+    #print "match type:", Type
     if Type == "":
         return True
     if Type[0] != '.':
         Type = '.' +Type
-    elif "." + i.split('.')[-1] == Type:
+    if "." + i.split('.')[-1] == Type:
         #print "match:", Type, ">>", i
         return True
 
@@ -74,10 +77,13 @@ def findfiler(p, Type = "", r="-r"):
         File.append(os.path.abspath(p))
         return File
 
+    #print "findfiler, p = ", p
     if os.path.isdir(p):
+        #print "p isdir"
         if r == "-r":
             return walkDir(p, Type)
         else:
+            #print "findfile", findfile(p, Type)
             return findfile(p, Type)
     
     #may be regular expression

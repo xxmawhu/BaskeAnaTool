@@ -65,6 +65,7 @@ def smartSub(files, logID='.log'):
         JOB = os.path.split(files[i])
         #print JOB
         #sub the job
+        out = ""
         if JOB[1].split('.')[-1] == 'txt':
             subcommand = 'boss.condor'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
@@ -130,6 +131,6 @@ def SubPy(files, logID=''):
     jobs = genBashList(files, 'python')
     SubBash(jobs)
 
-def SubDIY(files, command, logID=''):
-    jobs = genBashList(files, command)
-    SubBash(jobs)
+def SubDIY(files, execommand, subcommand, logID=''):
+    jobs = genBashList(files, execommand)
+    Sub(jobs, subcommand)
