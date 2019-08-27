@@ -74,4 +74,4 @@ g = Gen.process(name, simff, recff)
 g.Make()
 ```
 
-执行即可。
+执行gen.py即可。需要注意一点，模板之中不能出现断行。
