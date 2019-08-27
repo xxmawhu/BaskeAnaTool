@@ -42,11 +42,10 @@ Hepsub有选项可以控制提交何种作业
 #### 指定作业的执行方式
 受服务器现在，现有用特定程序执行某项任务，只能曲线救国。首先一个与之对于的Bash
     文件会自动生成，这个Bash文件将把文件的执行方式写入，如入
-
-   * root -l -b -q fit.C 
+* root -l -b -q fit.C 
 
 随后这个Bash文件将被提交，间接实现用‘root’执行此文件。
-    * exe="command" 这个选项用来指定执行方式
+* exe="command" 这个选项用来指定执行方式
 
 
         
@@ -58,19 +57,19 @@ Hepsub有选项可以控制提交何种作业
 
 第一个参数为模拟需要的卡片，第二个参数为期望模型的事例数。
 除了模拟为，还有如下的默认命令:
-    * Sim3770 
-    * SimNewJpsi
-    * SimJpsi
-    * Sim4180
+* Sim3770 
+* SimNewJpsi
+* SimJpsi
+* Sim4180
 
 ### 添加新的模拟类型
 需要准备好模拟和重建样板，比如: template/simExample.txt 和
 template/recExample.txt, 在SimAndRec下，修改gen.py
-     name = "Example"
-     simff="template/simExample.txt"
-     recff="template/recExample.txt"
-     import Gen
-     g = Gen.process(name, simff, recff)
-     g.Make()
+         name = "Example"
+         simff="template/simExample.txt"
+         recff="template/recExample.txt"
+         import Gen
+         g = Gen.process(name, simff, recff)
+         g.Make()
 
 执行即可。
