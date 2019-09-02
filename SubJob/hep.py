@@ -3,7 +3,10 @@
 import os
 import progressbar
 from commands import getoutput
-def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
+#hep_sub = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics"
+def Sub(files,
+        subcommand = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics",
+        Type='.sh', logID=''):
     if len(files) == 0:
         print("No Job found!!!")
         return
@@ -22,6 +25,7 @@ def Sub(files, subcommand='hep_sub -g physics', Type='.sh', logID=''):
 
 # sub one job
 def smartSubOneJob(File, logID='.log'):
+    hep_sub = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics"
     JOB = os.path.split(File)
     #sub the job
     if JOB[1].split('.')[-1] == 'txt':
@@ -29,13 +33,13 @@ def smartSubOneJob(File, logID='.log'):
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
     elif JOB[1].split('.')[-1] == 'sh':
         out = getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
-        subcommand = 'hep_sub -g physics'
+        subcommand = hep_sub
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
     elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
         shName = mkBash(File, 'root -l -b -q')
         JOB = os.path.split(shName)
-        subcommand = 'hep_sub -g physics'
+        subcommand = hep_sub
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
     elif JOB[1].split('.')[-1] == 'py':
         shName = mkBash(files[i], 'python')
@@ -50,6 +54,7 @@ def smartSubOneJob(File, logID='.log'):
 
 #sub job list
 def smartSub(files, logID='.log'):
+    hep_sub = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics"
     if len(files) == 0:
         print("No Job found!!!")
         return
@@ -60,23 +65,24 @@ def smartSub(files, logID='.log'):
         JOB = os.path.split(files[i])
         #print JOB
         #sub the job
+        out = ""
         if JOB[1].split('.')[-1] == 'txt':
             subcommand = 'boss.condor'
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'sh':
-            subcommand = 'hep_sub -g physics'
+            subcommand = hep_sub
             getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] in ['C', 'cxx', 'cc', 'cpp']:
             shName = mkBash(files[i], 'root -l -b -q')
             JOB = os.path.split(shName)
-            subcommand = 'hep_sub -g physics'
+            subcommand = hep_sub
             getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         elif JOB[1].split('.')[-1] == 'py':
             shName = mkBash(files[i], 'python')
             JOB = os.path.split(shName)
-            subcommand = 'hep_sub -g physics'
+            subcommand = hep_sub
             getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
             out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print out
@@ -110,7 +116,8 @@ def genBashList(files, command='root -l -b -q'):
     return jobs
 
 def SubBash(jobs, logID='.log'):
-    Sub(jobs, 'hep_sub -g physics', logID)
+    hep_sub = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics"
+    Sub(jobs, hep_sub, logID)
 
 def SubBOSS(jobs, logID='.log'):
     Sub(jobs, 'boss.condor', logID)
@@ -124,6 +131,6 @@ def SubPy(files, logID=''):
     jobs = genBashList(files, 'python')
     SubBash(jobs)
 
-def SubDIY(files, command, logID=''):
-    jobs = genBashList(files, command)
-    SubBash(jobs)
+def SubDIY(files, execommand, subcommand, logID=''):
+    jobs = genBashList(files, execommand)
+    Sub(jobs, subcommand)

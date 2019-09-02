@@ -1,14 +1,16 @@
 #得到当前脚本的绝对路径
 set called=($_) 
 if("$called" != " ") then 
-	set script_dir=`readlink -f $called[2]` 
+	set BasketAnaTool_dir=`readlink -f $called[2]` 
 else 
-	set script_dir=`readlink -f $0` 
+	set BasketAnaTool_dir=`readlink -f $0` 
 endif 
 
-set BaskDIR=`dirname $script_dir`
+setenv BaskDIR `dirname $BasketAnaTool_dir`
 
 setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
-#source ${BaskDIR}/cpplint/setup.sh
-source ${BaskDIR}/short/setup.csh
+
 source ${BaskDIR}/SimAndRec/setup.csh
+source ${BaskDIR}/short/setup.csh
+#use this python
+source /workfs/bes/maxx/local/python-2.7.14/setup.csh
