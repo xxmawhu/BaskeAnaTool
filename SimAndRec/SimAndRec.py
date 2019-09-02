@@ -52,7 +52,7 @@ class process():
         decaycard = os.path.abspath(self._decayCard)
         self._simSvc.SetDecayCard(decaycard)
         evts = self._totEvts / self._numOfJob
-        print ("Each job will simulate"+  str(evts) + " evts")
+        print ("Each job will simulate "+  str(int(evts)) + " evts")
         left = self._totEvts - evts * self._numOfJob 
         if left!= 0:
             print ("The first jobs will simulate extro " + str(evts) + "evts")

@@ -43,7 +43,7 @@ def hepsub(files):
             name=os.path.splitext(i)[0]
             os.chdir(path)
             os.system('chmod +x '+File)
-            os.system('hep_sub -g physics '+File)
+            os.system('/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics '+File)
             os.chdir(mypath)
         os.chdir(mypath)#return to my work path
 def getOpt():
@@ -61,7 +61,7 @@ def getArv():
             rs.append(i)
     return rs
 def MaxJobs():
-    num =  do("hep_q -u | wc -l")
+    num =  do("/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_q -u | wc -l")
     if num == "":
         num = 0
     return 10000 - int(num)

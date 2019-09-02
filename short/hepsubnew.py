@@ -49,13 +49,33 @@ class hepsub(jobCandidates):
     def run(self):
         self._prepare()
         #print self._jobList
-        if 'sub' in self._diy.keys() and  not 'exe' in self._diy.keys():
-            hep.Sub(self._jobList, self._diy['sub'])
-        if  'exe' in self._diy.keys():
-            hep.SubDIY(self._jobList, self._diy['exe'])
-        if not 'sub' in self._diy.keys():
-            #print "smartSub"
-            hep.smartSub(self._jobList)
+        #sub="...", define the sub commands
+        # exe="...", define the way to execute the file
+        # if exe in the diy, then the bash file will be made
+        if 'exe' in self._diy.keys():
+            #the sub is not set, we set the subway is 'hep_sub -g physics'
+            if not 'sub' in self._diy.keys():
+                self._diy['sub'] = 'hep_sub -g physics '
+            hep.SubDIY(self._jobList, self._diy['exe'], self._diy['sub'])
+            return
+        # if the subway is specially setted, but the exe way maybe not setted
+        # we will sub the jobs direclly once exe not setted
+        if 'sub' in self._diy.keys():
+            if not 'exe' in self._diy.keys():
+                hep.Sub(self._jobList, self._diy['sub'])
+            else:
+                hep.SubDIY(self._jobList, self._diy['exe'], self._diy['sub'])
+            return
+        if 'type' in self._diy.keys():
+            # the exe way is usually setted, if not set is as 'root -l -b -q'
+            # if the sub way is boss.condor, sub it directly
+            if not 'sub' in self._diy.keys():
+                self._diy['sub'] = "hep_sub -g physics"
+            if not 'exe' in self._diy.keys():
+                self._diy['exe'] = 'root -l -b -q'
+            hep.SubDIY(self._jobList, self._diy['exe'], self._diy['sub'])
+            return
+        hep.smartSub(self._jobList)
 
 test = hepsub()
 test.run()
