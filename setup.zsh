@@ -6,6 +6,6 @@ export PYTHONPATH=${BaskDIR}:$PYTHONPATH
 source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
 
 # shellcheck source=short/setup.sh
-source "${BaskDIR}/short/setup.sh"
+source "${BaskDIR}/short/setup.zsh"
 # shellcheck source=SimAndRec/setup.sh
-source "${BaskDIR}/SimAndRec/setup.sh"
+source "${BaskDIR}/SimAndRec/setup.zsh"
