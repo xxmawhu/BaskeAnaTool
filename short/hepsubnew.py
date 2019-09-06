@@ -1,27 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import util
 from util import jobCandidates
 from SubJob import hep
 _USAGE = '''
 Usage:  [option] [files or directory]
 Option: 
-    -help get help
-    -c type="c, C, cpp, cc"
-        1) make bash job,  into which the follow command will be wrote, 
-             `root -l -b -q [the file]`
-        2) change the authority: `chmod +x [the file].sh`
-        3) submit: `hep_sub -g physics [the file].sh`
-
-    -sh change the authority of those files, then submit all of them to the
-        server.
-
-    -txt submit all BOSS job files which end with `.txt`, to the server.
-       the submit command is `boss.condor`
-
-    -py type="py" 
-        1) make bash job,  into which the follow command will be wrote, 
-             `python [the file]`
-        2) same as -c mode
-    -r recursively
 
 Assign special submit and execute commands or special file type
     ie. sub="hep_sub"
@@ -77,5 +61,6 @@ class hepsub(jobCandidates):
             return
         hep.smartSub(self._jobList)
 
-test = hepsub()
-test.run()
+if __name__ == "__main__":
+    test = hepsub()
+    test.run()
