@@ -1,8 +1,8 @@
 ##ignore this file##
 # ignore  the .pyc file
-*/*.pyc
-*/*.spec
-SimAndRec/ana*.py
+*.pyc
+*.spec
+SimAndRec/Ana*.py
 SimAndRec/init*.py
-SimAndRec/NUM.py
-*/__pycache__
+NUM.py
+__pycache__/
