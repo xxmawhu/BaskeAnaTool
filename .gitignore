@@ -2,6 +2,7 @@
 # ignore  the .pyc file
 *.pyc
 *.spec
+bin/
 SimAndRec/Ana*.py
 SimAndRec/init*.py
 NUM.py
