@@ -1,4 +1,15 @@
-# Copyright (C) 2019 Ma Xinxin
+#!/usr/bin/env python
+# ====================================================
+#   Copyright (C)2019 All rights reserved.
+#
+#   Author        : Xin-Xin MA
+#   Email         : xxmawhu@163.com
+#   File Name     : error.py
+#   Created Time  : 2019-10-08 13:09
+#   Last Modified : 2019-10-08 13:09
+#   Describe      :
+#
+# ====================================================
 import os
 import util as mf
 import sys
