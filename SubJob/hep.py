@@ -98,7 +98,7 @@ def SubJobList(files, sub_command):
         print("Warning::No Job found!!!")
         return
 
-    list.sort(files)
+    #list.sort(files)
     print("Sub %d jobs......"%(len(files)))
     file_sub_list = [[i, sub_command] for i in files]
     idList = []
@@ -125,7 +125,7 @@ def Sub(files, Types = [],
         return
 
     print("Sub %d jobs......"%(len(files)))
-    list.sort(files)
+    # list.sort(files)
     file_sub_list = [[i, sub_command] for i in files]
     idList = []
     for i in progressbar.progressbar(range(len(files)/20)):
@@ -144,7 +144,7 @@ def Sub(files,
     if not files:
         print("No Job found!!!")
         return
-    list.sort(files)
+    # list.sort(files)
     print("Sub %d jobs......"%(len(files)))
     for i in progressbar.progressbar(range(len(files)/20)):
         JOB = os.path.split(files[i])
@@ -169,7 +169,7 @@ def smartSub(files):
     if not files:
         print("Warning::No Job found!!!")
         return
-    list.sort(files)
+    #list.sort(files)
     print("Sub %d jobs......"%(len(files)))
     idList = []
     pool = Pool(20)
@@ -196,7 +196,7 @@ def genBashList(files, command='root -l -b -q'):
     jobs = []
     for i in files:
         jobs.append(mkBash(i, command))
-    jobs.sort()
+    #jobs.sort()
     return jobs
 
 def SubBash(jobs, logID='.log'):
