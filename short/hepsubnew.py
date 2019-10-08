@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# ====================================================
+#   Copyright (C)2019 All rights reserved.
+#
+#   Author        : Xin-Xin MA
+#   Email         : xxmawhu@163.com
+#   File Name     : hepsubnew.py
+#   Created Time  : 2019-10-08 12:52
+#   Last Modified : 2019-10-08 12:52
+#   Describe      :
+#
+# ====================================================
 import util
 from util import jobCandidates
 from SubJob import hep
@@ -59,6 +70,7 @@ class hepsub(jobCandidates):
                 self._diy['exe'] = 'root -l -b -q'
             hep.SubDIY(self._jobList, self._diy['exe'], self._diy['sub'])
             return
+        # print(self._jobList)
         hep.smartSub(self._jobList)
 
 if __name__ == "__main__":
