@@ -80,6 +80,7 @@ def smartSubOneJob(file_name):
         exe_command = util.exe[file_type]
         sh_name = mkBash(file_name, exe_command)
         file_sub = [sh_name, sub_command]
+        return SubOneJob(file_sub)
     except KeyError as e:
         print "KeyError: no such type in util.exe"
         raise e
@@ -128,8 +129,13 @@ def Sub(files, Types = [],
     # list.sort(files)
     file_sub_list = [[i, sub_command] for i in files]
     idList = []
-    for i in progressbar.progressbar(range(len(files)/20)):
-        pool = Pool(20)
+    pool = Pool(20)
+    if len(files) % 20 == 0 :
+        n_group = len(files)/20
+    else:
+        n_group = len(files)/20 + 1
+
+    for i in progressbar.progressbar(range(n_group)):
         ids = pool.map(SubOneJob, file_sub_list[i*20:(i+1)*20])
         for ID in ids:
             idList.append(ID)
@@ -173,7 +179,11 @@ def smartSub(files):
     print("Sub %d jobs......"%(len(files)))
     idList = []
     pool = Pool(20)
-    for i in progressbar.progressbar(range(len(files)/20)):
+    if len(files) % 20 == 0 :
+        n_group = len(files)/20
+    else:
+        n_group = len(files)/20 + 1
+    for i in progressbar.progressbar(range(n_group)):
         # 20 processers perform best!
         ids = pool.map(smartSubOneJob, files[i*20:(i+1)*20])
         for ID in ids:
