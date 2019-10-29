@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 21:03:45 CST
+# Last Updated: 2019-10-29 Tue 21:24:02 CST
 #           By: Hao-Kai SUN
-#     Update #: 45
+#     Update #: 47
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -59,7 +59,7 @@ else:
     cmd_rawINC: list = [CMT, 'show', 'macro_value', 'includes']
 
 
-def srun(cmd: list, timeout: int = 10) -> str:
+def srun(cmd: list, timeout: int = 10):
     """Wrapper for subprocess."""
     try:
         proc = sp.Popen(cmd, stdout=sp.PIPE, encoding="utf-8")
