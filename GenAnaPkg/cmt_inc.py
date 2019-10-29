@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 17:17:39 CST
+# Last Updated: 2019-10-29 Tue 17:20:21 CST
 #           By: Hao-Kai SUN
-#     Update #: 23
+#     Update #: 25
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -57,6 +57,7 @@ def srun(cmd: list, timeout: int = 10) -> str:
 
 
 rlt_rawINC: str = srun(cmd_rawINC)
-print(rlt_rawINC)
+rawINC: list = rlt_rawINC.strip().split()
+print(rawINC)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
