@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 16:54:36 CST
+# Last Updated: 2019-10-29 Tue 17:17:39 CST
 #           By: Hao-Kai SUN
-#     Update #: 4
+#     Update #: 23
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -30,12 +30,33 @@
 Generate include paths for compiling flags.
 """
 import os
+import subprocess as sp
 
 # extract CMT system info from environment variables
-CMTROOT: str = os.environ['CMTROOT']
-CMTBIN: str = os.environ['CMTBIN']
-CMT: str = os.sep.join([CMTROOT, CMTBIN, 'cmt.exe'])
+try:
+    CMTROOT: str = os.environ['CMTROOT']
+    CMTBIN: str = os.environ['CMTBIN']
+    CMT: str = os.sep.join([CMTROOT, CMTBIN, 'cmt.exe'])
+except Exception as excep:
+    print("Is BOSS environment set correctly?")
+    raise excep
+else:
+    cmd_rawINC: list = [CMT, 'show', 'macro_value', 'includes']
 
-print(CMT)
+
+def srun(cmd: list, timeout: int = 10) -> str:
+    """Wrapper for subprocess."""
+    try:
+        proc = sp.Popen(cmd, stdout=sp.PIPE, encoding="utf-8")
+        tmp: tuple = proc.communicate(timeout=timeout)
+    except Exception as excep:
+        print("during run cmt show: ")
+        raise excep
+    else:
+        return tmp[0] if tmp[1] is None else tmp[1]
+
+
+rlt_rawINC: str = srun(cmd_rawINC)
+print(rlt_rawINC)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
