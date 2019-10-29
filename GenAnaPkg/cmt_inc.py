@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 20:25:35 CST
+# Last Updated: 2019-10-29 Tue 20:59:05 CST
 #           By: Hao-Kai SUN
-#     Update #: 33
+#     Update #: 43
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -32,16 +32,21 @@ Generate include paths for compiling flags.
 import os
 import subprocess as sp
 
+# check for current working directory simply
+ERRMSG: str = "NOT working under package's 'cmt' directory!"
+assert os.getcwd().endswith("cmt"), ERRMSG
+
 ODDTUPLE: tuple = (
     '-I"include_dirs"',
     '-I"apply_pattern"',
     '-I"component_library"',
 )
+
 # extract CMT system info from environment variables
 try:
     CMTROOT: str = os.environ['CMTROOT']
     CMTBIN: str = os.environ['CMTBIN']
-    CMT: str = os.sep.join([CMTROOT, CMTBIN, 'cmt.exe'])
+    CMT: str = os.path.join(CMTROOT, CMTBIN, 'cmt.exe')
 except Exception as excep:
     print("Is BOSS environment set correctly?")
     raise excep
@@ -68,8 +73,10 @@ rawINC: list = rlt_rawINC.strip().split()
 for oddElt in ODDTUPLE:
     rawINC.remove(oddElt)
 
-INC: list = [inc[2:] for inc in rawINC]
+INC: list = [' ' * 4 + inc[2:] for inc in rawINC]
 
-print(INC)
+# for use in CMakeLists.txt `target_include_directories`
+for i in INC:
+    print(i)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
