@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 17:20:21 CST
+# Last Updated: 2019-10-29 Tue 19:41:39 CST
 #           By: Hao-Kai SUN
-#     Update #: 25
+#     Update #: 32
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -32,6 +32,11 @@ Generate include paths for compiling flags.
 import os
 import subprocess as sp
 
+ODDTUPLE: tuple = (
+    '-I"include_dirs"',
+    '-I"apply_pattern"',
+    '-I"component_library"',
+)
 # extract CMT system info from environment variables
 try:
     CMTROOT: str = os.environ['CMTROOT']
@@ -58,6 +63,13 @@ def srun(cmd: list, timeout: int = 10) -> str:
 
 rlt_rawINC: str = srun(cmd_rawINC)
 rawINC: list = rlt_rawINC.strip().split()
-print(rawINC)
+
+# remove unknown(odd) terms
+for oddElt in ODDTUPLE:
+    rawINC.remove(oddElt)
+
+INC: list = [inc[2:] for inc in rawINC]
+
+print(INC)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
