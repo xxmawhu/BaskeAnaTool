@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 20:59:05 CST
+# Last Updated: 2019-10-29 Tue 21:03:45 CST
 #           By: Hao-Kai SUN
-#     Update #: 43
+#     Update #: 45
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -31,6 +31,11 @@ Generate include paths for compiling flags.
 """
 import os
 import subprocess as sp
+from sys import version_info as verinfo
+
+# python version check!
+VERMSG: str = "TOO old python version! 3.7+, please!"
+assert verinfo.major == 3 and verinfo.minor >= 7, VERMSG
 
 # check for current working directory simply
 ERRMSG: str = "NOT working under package's 'cmt' directory!"
