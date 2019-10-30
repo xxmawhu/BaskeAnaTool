@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 16:56:56 CST
+# Last Updated: 2019-10-30 Wed 16:58:38 CST
 #           By: Hao-Kai SUN
-#     Update #: 95
+#     Update #: 96
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -64,5 +64,7 @@ ENVL: list = srun(['env']).strip().split('\n')
 
 LIBP: list = [e for e in ENVL if 'ROOT=' in e]
 
+for l in LIBP:
+    print(l)
 # ===================================================================<<<
 # ======================== env_lib.py ends here ========================
