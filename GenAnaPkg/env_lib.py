@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 19:15:25 CST
+# Last Updated: 2019-10-30 Wed 19:19:38 CST
 #           By: Hao-Kai SUN
-#     Update #: 135
+#     Update #: 138
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -35,6 +35,7 @@ from sys import version_info as verinfo
 
 # BOSS 6.6.4.p03 architecture
 ARCH: str = 'x86_64-slc5-gcc43-opt'
+LDHEAD: str = '-shared -fPIC -ldl -Wl,--no-undefined -Wl,--as-needed'
 WCLHEP: str = '1.9.4.2'
 WGAUDI: str = 'v27r6'
 WGAUDIAUD: str = 'v9r1'
@@ -74,6 +75,7 @@ ENVL: list = srun(['env']).strip().split('\n')
 
 LIBP: list = [e for e in ENVL if 'ROOT=' in e and e[:6] not in ODDTUPLE]
 
+# remove odd libs and adapt for CMakeLists.txt
 fullLIBP: list = []
 temp: list = []
 for l in LIBP:
@@ -92,7 +94,8 @@ for l in LIBP:
         fullLIBP.append(' '.join(list(dict.fromkeys(temp))))
     temp.clear()
 
+print(f'"{LDHEAD}"')
 for l in fullLIBP:
-    print(l)
+    print(f'"{l}"')
 # ===================================================================<<<
 # ======================== env_lib.py ends here ========================
