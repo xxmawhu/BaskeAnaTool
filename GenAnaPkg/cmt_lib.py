@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 13:15:34 CST
+# Last Updated: 2019-10-30 Wed 13:20:17 CST
 #           By: Hao-Kai SUN
-#     Update #: 73
+#     Update #: 77
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -68,11 +68,11 @@ def srun(cmd: list, timeout: int = 10):
 
 
 PKGNAME: str = srun(cmd_PKGNAME)
-print(PKGNAME)
-cmd_PKGROOT += [PKGNAME + '_root']
+print('Package Name:', PKGNAME)
+cmd_PKGROOT.append(PKGNAME + '_root')
 PKGROOT: str = srun(cmd_PKGROOT)
-print(PKGROOT)
-cmd_rawLIB += [PKGNAME + '_shlibflags']
+print('Package root:', PKGROOT)
+cmd_rawLIB.append(PKGNAME + '_shlibflags')
 rawLIB: list = list(dict.fromkeys(
     srun(cmd_rawLIB).strip().replace('..', PKGROOT).split()))
 
