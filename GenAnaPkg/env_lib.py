@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 18:55:28 CST
+# Last Updated: 2019-10-30 Wed 18:56:45 CST
 #           By: Hao-Kai SUN
-#     Update #: 130
+#     Update #: 131
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -34,7 +34,7 @@ import subprocess as sp
 from sys import version_info as verinfo
 
 # BOSS 6.6.4.p03 architecture
-ARCH: str = 'x86_64-slc4-gcc43-opt'
+ARCH: str = 'x86_64-slc5-gcc43-opt'
 
 ODDTUPLE: tuple = (
     'ZPLUG_',
