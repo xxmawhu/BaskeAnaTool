@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 18:37:44 CST
+# Last Updated: 2019-10-30 Wed 18:40:51 CST
 #           By: Hao-Kai SUN
-#     Update #: 124
+#     Update #: 126
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -78,9 +78,9 @@ for l in LIBP:
         if "-dbg" not in fpr.as_posix():
             hasso = True
             libn: str = fpr.name[3:-3]
-        temp.append('-l' + libn)
+            temp.append('-l' + libn)
     if hasso:
-        temp.append('-L' + fpr.parent.as_posix())
+        temp.insert(0, '-L' + fpr.parent.as_posix())
         fullLIBP.append(' '.join(temp))
     temp.clear()
 
