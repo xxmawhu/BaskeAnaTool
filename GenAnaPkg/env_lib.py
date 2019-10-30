@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 18:29:06 CST
+# Last Updated: 2019-10-30 Wed 18:31:24 CST
 #           By: Hao-Kai SUN
-#     Update #: 116
+#     Update #: 119
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -73,11 +73,11 @@ temp: list = []
 for l in LIBP:
     hasso: bool = False
     lp: str = ''.join(l.split('=')[1:])
-    temp.append(lp)
+    temp.append('-L' + lp)
     for fp in list(pl.Path(lp).rglob('lib*.so')):
         hasso = True
         libn: str = fp.resolve(strict=True).name[3:-3]
-        temp.append(object)
+        temp.append('-l' + libn)
     if hasso:
         fullLIBP.append(' '.join(temp))
     temp.clear()
