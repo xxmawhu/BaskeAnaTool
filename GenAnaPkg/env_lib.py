@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 18:48:44 CST
+# Last Updated: 2019-10-30 Wed 18:55:28 CST
 #           By: Hao-Kai SUN
-#     Update #: 128
+#     Update #: 130
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -32,6 +32,9 @@ Generate library link flags from BOSS environment variables..
 import pathlib as pl
 import subprocess as sp
 from sys import version_info as verinfo
+
+# BOSS 6.6.4.p03 architecture
+ARCH: str = 'x86_64-slc4-gcc43-opt'
 
 ODDTUPLE: tuple = (
     'ZPLUG_',
@@ -75,7 +78,7 @@ for l in LIBP:
     lp: str = ''.join(l.split('=')[1:])
     for fp in list(pl.Path(lp).rglob('lib*.so')):
         fpr = fp.resolve(strict=True)
-        if "-dbg" not in fpr.as_posix():
+        if ARCH in fpr.as_posix():
             hasso = True
             libn: str = fpr.name[3:-3]
             temp.append('-L' + fpr.parent.as_posix())
