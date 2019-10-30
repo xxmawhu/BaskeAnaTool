@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-29 Tue 21:24:02 CST
+# Last Updated: 2019-10-30 Wed 11:18:34 CST
 #           By: Hao-Kai SUN
-#     Update #: 47
+#     Update #: 48
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -78,10 +78,10 @@ rawINC: list = rlt_rawINC.strip().split()
 for oddElt in ODDTUPLE:
     rawINC.remove(oddElt)
 
-INC: list = [' ' * 4 + inc[2:] for inc in rawINC]
+INC: list = [inc[2:] for inc in rawINC]
 
 # for use in CMakeLists.txt `target_include_directories`
 for i in INC:
-    print(i)
+    print(' ' * 4 + i)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
