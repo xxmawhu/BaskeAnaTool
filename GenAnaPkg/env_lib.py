@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 17:19:27 CST
+# Last Updated: 2019-10-30 Wed 17:20:26 CST
 #           By: Hao-Kai SUN
-#     Update #: 107
+#     Update #: 108
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -65,7 +65,7 @@ except Exception as excep:
 
 ENVL: list = srun(['env']).strip().split('\n')
 
-LIBP: list = [e for e in ENVL if 'ROOT=' in e and e[:5] not in ODDTUPLE]
+LIBP: list = [e for e in ENVL if 'ROOT=' in e and e[:6] not in ODDTUPLE]
 
 for l in LIBP:
     print(l)
