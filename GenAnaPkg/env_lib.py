@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 17:11:20 CST
+# Last Updated: 2019-10-30 Wed 17:19:27 CST
 #           By: Hao-Kai SUN
-#     Update #: 101
+#     Update #: 107
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -29,15 +29,16 @@
 """
 Generate library link flags from BOSS environment variables..
 """
-import os
 import subprocess as sp
 from sys import version_info as verinfo
 
 ODDTUPLE: tuple = (
-    'ZPLUG',
-    'SITE',
+    'ZPLUG_',
+    # 'CMTROO',
+    'SITERO',
     'TESTRE',
 )
+
 
 def srun(cmd: list, timeout: int = 10):
     """Wrapper for subprocess."""
@@ -64,7 +65,7 @@ except Exception as excep:
 
 ENVL: list = srun(['env']).strip().split('\n')
 
-LIBP: list = [e for e in ENVL for o in ODDTUPLE if 'ROOT=' in e and o not in e]
+LIBP: list = [e for e in ENVL if 'ROOT=' in e and e[:5] not in ODDTUPLE]
 
 for l in LIBP:
     print(l)
