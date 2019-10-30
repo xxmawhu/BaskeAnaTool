@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 17:20:26 CST
+# Last Updated: 2019-10-30 Wed 18:23:39 CST
 #           By: Hao-Kai SUN
-#     Update #: 108
+#     Update #: 114
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -29,6 +29,7 @@
 """
 Generate library link flags from BOSS environment variables..
 """
+import pathlib as pl
 import subprocess as sp
 from sys import version_info as verinfo
 
@@ -67,7 +68,20 @@ ENVL: list = srun(['env']).strip().split('\n')
 
 LIBP: list = [e for e in ENVL if 'ROOT=' in e and e[:6] not in ODDTUPLE]
 
+fullLIBP: list = []
+temp: list = []
 for l in LIBP:
+    hasso: bool = False
+    temp.append(l)
+    for fp in list(pl.Path(l).rglob('lib*.so')):
+        hasso = True
+        libn: str = fp.resolve(strict=True).name[3:-3]
+        temp.append(object)
+    if hasso:
+        fullLIBP.append(' '.join(temp))
+    temp.clear()
+
+for l in fullLIBP:
     print(l)
 # ===================================================================<<<
 # ======================== env_lib.py ends here ========================
