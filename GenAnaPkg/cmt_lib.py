@@ -1,13 +1,14 @@
 #!/usr/bin/env python
+
 # -*- coding: utf-8 -*-
 # <===<===<===<===<===<===<===<===<===~===>===>===>===>===>===>===>===>===>
 # File Name:    cmt_lib.py
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 13:29:53 CST
+# Last Updated: 2019-11-07 Thu 22:21:22 CST
 #           By: Hao-Kai SUN
-#     Update #: 84
+#     Update #: 130
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -54,6 +55,33 @@ else:
     cmd_PKGROOT: list = [CMT, 'show', 'macro_value']
     cmd_rawLIB: list = [CMT, 'show', 'macro_value']
 
+CMAKESTR: str = """
+set(LIBNAMES
+    {libn}
+)
+set(LIBDIRS
+    {libd}
+)
+
+target_compile_options("${{PROJECT_NAME}}" PUBLIC
+    {cppf}
+    )
+
+foreach(LIBN "${{LIBNAMES}}")
+    find_library(TEMPLIB
+        NAMES "${{LIBN}}"
+        PATHS "${{LIBDIRS}}"
+        NO_DEFAULT_PATH
+    )
+
+    target_link_libraries("${{PROJECT_NAME}}"
+        PUBLIC "${{TEMPLIB}}")
+
+    # clear temp variable.
+    unset(${{TEMPLIB}})
+endforeach()
+"""
+
 
 def srun(cmd: list, timeout: int = 10):
     """Wrapper for subprocess."""
@@ -67,25 +95,84 @@ def srun(cmd: list, timeout: int = 10):
         return tmp[0] if tmp[1] is None else tmp[1]
 
 
+def equalsplit(longlist: list, seplength: int = 70, sep: str = " ") -> list:
+    """Merge and/or split long list into appx-equal-length-element list.
+
+    e.g.
+    longlist: ['a', 'b', 'c', .... 'z']
+    result:
+    ['a b c d e f g', 'h i j k l m n', ...]
+    """
+    tem: str = ""
+    rlt: list = []
+    for ele in longlist:
+        if len(tem) + len(ele) + len(sep) > seplength:
+            rlt.append(tem)
+            tem = ""
+        else:
+            tem += f'{sep}{ele}'
+
+    if len(tem) != 0:
+        rlt.append(tem)
+
+    return rlt
+
+
+cmd_CPPFLAGS: list = cmd_rawLIB + ['cppflags']
+CPPFLAGS: list = equalsplit(srun(cmd_CPPFLAGS).strip().split())
+
 PKGNAME: str = srun(cmd_PKGNAME).strip()
 # print('Package Name:', PKGNAME)
+
 cmd_PKGROOT.append(PKGNAME + '_root')
 PKGROOT: str = srun(cmd_PKGROOT).strip()
 # print('Package root:', PKGROOT)
+
 cmd_rawLIB.append(PKGNAME + '_shlibflags')
-rawLIB: list = list(dict.fromkeys(
-    srun(cmd_rawLIB).strip().replace('..', PKGROOT).split()))
+rawLIB: list = list(
+    dict.fromkeys(srun(cmd_rawLIB).strip().replace('..', PKGROOT).split()))
 
-# for CMakeLists.txt compile flags setting
-temp: list = []
-LIB: list = []
-for l in rawLIB:
-    if l.startswith('-L'):
-        LIB.append(' '.join(temp))
-        temp.clear()
-    temp.append(l)
 
-for l in LIB:
-    print('"{0}"'.format(l))
+# for CMakeLists.txt compile flags setting (1)
+def cmake1():
+    """Version 1 for target_link_options"""
+    temp: list = []
+    libs: list = []
+    for lib in rawLIB:
+        if lib.startswith('-L'):
+            libs.append(' '.join(temp))
+            temp.clear()
+        temp.append(lib)
+
+    for lib in libs:
+        print('"{0}"'.format(lib))
+
+
+# for CMakeLists.txt compile flags setting (2)
+def cmake2():
+    """Version 2 for cmake1() + foreach, find_libary, target_link_libraries."""
+    oths: list = []
+    dirs: list = []
+    dirf: bool = False
+    libs: list = []
+    for lib in rawLIB:
+        if lib.startswith('-L'):
+            dirf = True
+            dirs.append(lib[2:])
+        elif lib.startswith('-l') and dirf:
+            libs.append(lib[2:])
+        elif not (dirf or lib.startswith('.') or lib.startswith('/')):
+            oths.append(lib)
+        else:
+            print(f"Cannot parse this link option: {lib}.")
+            raise Exception
+
+    libd: str = '\n    '.join(equalsplit(dirs))
+    libn: str = '\n    '.join(equalsplit(libs))
+    cppf: str = '\n    '.join(equalsplit(oths))
+    print(CMAKESTR.format(libd=libd, libn=libn, cppf=cppf))
+
+
+cmake2()
 # ===================================================================<<<
 # ======================== cmt_lib.py ends here ========================
