@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-07 Thu 22:21:22 CST
+# Last Updated: 2019-11-08 Fri 17:03:43 CST
 #           By: Hao-Kai SUN
-#     Update #: 130
+#     Update #: 131
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -106,6 +106,9 @@ def equalsplit(longlist: list, seplength: int = 70, sep: str = " ") -> list:
     tem: str = ""
     rlt: list = []
     for ele in longlist:
+        if len(ele) >= seplength:
+            rlt.append(ele)
+            continue
         if len(tem) + len(ele) + len(sep) > seplength:
             rlt.append(tem)
             tem = ""
