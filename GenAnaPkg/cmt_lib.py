@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-08 Fri 17:15:59 CST
+# Last Updated: 2019-11-08 Fri 17:56:16 CST
 #           By: Hao-Kai SUN
-#     Update #: 132
+#     Update #: 148
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -103,22 +103,37 @@ def equalsplit(longlist: list, seplength: int = 70, sep: str = " ") -> list:
     result:
     ['a b c d e f g', 'h i j k l m n', ...]
     """
-    tem: str = ""
-    rlt: list = []
-    for ele in longlist:
-        if len(ele) >= seplength:
-            rlt.append(ele)
-            continue
-        if len(tem) + len(ele) + len(sep) > seplength:
-            rlt.append(tem)
-            tem = ""
+    if len(longlist) in (0, 1):
+        return longlist
+
+    index: int = 0
+    while index < len(longlist) - 1:
+        tmp1: str = longlist[index]
+        tmp2: str = longlist[index + 1]
+        if len(tmp1 + sep + tmp2) <= seplength:
+            longlist[index] = f'{tmp1}{sep}{tmp2}'
+            longlist.pop(index + 1)
         else:
-            tem += f'{sep}{ele}'
+            index += 1
 
-    if len(tem) != 0:
-        rlt.append(tem)
+    return longlist
+    # tmp: str = ""
+    # rlt: list = []
+    # for ele in longlist:
+    #     if len(ele) >= seplength:
+    #         if len(tmp) != 0:
+    #             rlt.append(tmp)
+    #         rlt.append(ele)
+    #     elif len(tmp) + len(ele) + len(sep) > seplength:
+    #         rlt.append(tmp)
+    #         tmp = ""
+    #     else:
+    #         tmp += f'{sep}{ele}'
 
-    return rlt
+    # if len(tmp) != 0:
+    #     rlt.append(tmp)
+
+    # return rlt
 
 
 cmd_CPPFLAGS: list = cmd_rawLIB + ['cppflags']
@@ -172,7 +187,7 @@ def cmake2():
             raise Exception
 
     libd: str = '\n    '.join(equalsplit(dirs))
-    libn: str = '\n    '.join(equalsplit(libs))
+    libn: str = '\n    '.join(equalsplit(libs, sep=";"))
     cppf: str = '\n    '.join(equalsplit(oths))
     print(CMAKESTR.format(libd=libd, libn=libn, cppf=cppf))
 
