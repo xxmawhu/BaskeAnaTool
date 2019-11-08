@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-08 Fri 17:56:16 CST
+# Last Updated: 2019-11-08 Fri 18:05:31 CST
 #           By: Hao-Kai SUN
-#     Update #: 148
+#     Update #: 150
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -93,6 +93,11 @@ def srun(cmd: list, timeout: int = 10):
         raise excep
     else:
         return tmp[0] if tmp[1] is None else tmp[1]
+
+
+def addquote(rawlist: list) -> list:
+    """add double quote for each element of a list."""
+    return [f'"{rawl}"' for rawl in rawlist]
 
 
 def equalsplit(longlist: list, seplength: int = 70, sep: str = " ") -> list:
@@ -186,9 +191,9 @@ def cmake2():
             print(f"Cannot parse this link option: {lib}.")
             raise Exception
 
-    libd: str = '\n    '.join(equalsplit(dirs))
-    libn: str = '\n    '.join(equalsplit(libs, sep=";"))
-    cppf: str = '\n    '.join(equalsplit(oths))
+    libd: str = '\n    '.join(addquote(equalsplit(dirs)))
+    libn: str = '\n    '.join(addquote(equalsplit(libs, sep=";")))
+    cppf: str = '\n    '.join(addquote(equalsplit(oths)))
     print(CMAKESTR.format(libd=libd, libn=libn, cppf=cppf))
 
 
