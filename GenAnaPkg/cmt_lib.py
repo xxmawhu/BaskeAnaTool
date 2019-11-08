@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-08 Fri 17:03:43 CST
+# Last Updated: 2019-11-08 Fri 17:15:59 CST
 #           By: Hao-Kai SUN
-#     Update #: 131
+#     Update #: 132
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -159,6 +159,7 @@ def cmake2():
     dirf: bool = False
     libs: list = []
     for lib in rawLIB:
+        lib = lib.strip()
         if lib.startswith('-L'):
             dirf = True
             dirs.append(lib[2:])
