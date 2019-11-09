@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-09 Sat 13:57:08 CST
+# Last Updated: 2019-11-09 Sat 14:01:26 CST
 #           By: Hao-Kai SUN
-#     Update #: 167
+#     Update #: 168
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -62,7 +62,8 @@ set(LIBNAMES
 set(LIBDIRS
     {libd}
 )
-string(REPLACE ";" " " LIBDIRS "${{LIBDIRS}}")
+# DO NOT replace semicolon!
+# string(REPLACE ";" " " LIBDIRS "${{LIBDIRS}}")
 
 target_compile_options(${{PROJECT_NAME}} PUBLIC
     {cppf}
