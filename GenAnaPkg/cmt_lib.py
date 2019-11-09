@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-09 Sat 14:01:26 CST
+# Last Updated: 2019-11-09 Sat 14:26:57 CST
 #           By: Hao-Kai SUN
-#     Update #: 168
+#     Update #: 169
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -56,6 +56,7 @@ else:
     cmd_rawLIB: list = [CMT, 'show', 'macro_value']
 
 CMAKESTR: str = """
+# from `cmt show macro_value <PACKAGE_NAME>_shlibflags`
 set(LIBNAMES
     {libn}
 )
@@ -65,9 +66,12 @@ set(LIBDIRS
 # DO NOT replace semicolon!
 # string(REPLACE ";" " " LIBDIRS "${{LIBDIRS}}")
 
+# from `cmt show macro_value cppflags`
 target_compile_options(${{PROJECT_NAME}} PUBLIC
     {cppf}
     )
+# from `cmt show macro_value cpplinkflags`
+# and partly from `cmt show macro_value <PACKAGE_NAME>_shlibflags`
 target_link_options(${{PROJECT_NAME}} PUBLIC
     {cppl}
     )
