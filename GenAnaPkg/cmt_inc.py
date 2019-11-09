@@ -5,9 +5,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-10-30 Wed 11:18:34 CST
+# Last Updated: 2019-11-09 Sat 14:06:30 CST
 #           By: Hao-Kai SUN
-#     Update #: 48
+#     Update #: 51
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -81,7 +81,14 @@ for oddElt in ODDTUPLE:
 INC: list = [inc[2:] for inc in rawINC]
 
 # for use in CMakeLists.txt `target_include_directories`
-for i in INC:
-    print(' ' * 4 + i)
+CMAKESTR: str = """
+target_include_directories(
+    ${{PROJECT_NAME}} PUBLIC
+    {INCD}
+    )
+"""
+print(CMAKESTR.format(INCD='\n    '.join(INC)))
+# for i in INC:
+#     print(' ' * 4 + i)
 # ===================================================================<<<
 # ======================== cmt_inc.py ends here ========================
