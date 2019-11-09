@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-08 Fri 18:05:31 CST
+# Last Updated: 2019-11-09 Sat 13:51:58 CST
 #           By: Hao-Kai SUN
-#     Update #: 150
+#     Update #: 165
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -62,23 +62,30 @@ set(LIBNAMES
 set(LIBDIRS
     {libd}
 )
+string(REPLACE ";" " " LIBDIRS "${{LIBDIRS}}")
 
-target_compile_options("${{PROJECT_NAME}}" PUBLIC
+target_compile_options(${{PROJECT_NAME}} PUBLIC
     {cppf}
     )
-
-foreach(LIBN "${{LIBNAMES}}")
-    find_library(TEMPLIB
-        NAMES "${{LIBN}}"
-        PATHS "${{LIBDIRS}}"
-        NO_DEFAULT_PATH
+target_link_options(${{PROJECT_NAME}} PUBLIC
+    {cppl}
     )
 
-    target_link_libraries("${{PROJECT_NAME}}"
-        PUBLIC "${{TEMPLIB}}")
+foreach(LIBN ${{LIBNAMES}})
+    find_library(TEMPLIB
+        NAMES ${{LIBN}}
+        PATHS ${{LIBDIRS}}
+        NO_DEFAULT_PATH
+    )
+    if(NOT TEMPLIB)
+        message("*** ${{LIBN}} IS NOT FOUND! ***")
+    endif()
+
+    target_link_libraries(${{PROJECT_NAME}}
+        PUBLIC ${{TEMPLIB}})
 
     # clear temp variable.
-    unset(${{TEMPLIB}})
+    unset(TEMPLIB CACHE)
 endforeach()
 """
 
@@ -144,6 +151,9 @@ def equalsplit(longlist: list, seplength: int = 70, sep: str = " ") -> list:
 cmd_CPPFLAGS: list = cmd_rawLIB + ['cppflags']
 CPPFLAGS: list = equalsplit(srun(cmd_CPPFLAGS).strip().split())
 
+cmd_CPPLFLAGS: list = cmd_rawLIB + ['cpplinkflags']
+CPPLFLAGS: list = equalsplit(srun(cmd_CPPLFLAGS).strip().split())
+
 PKGNAME: str = srun(cmd_PKGNAME).strip()
 # print('Package Name:', PKGNAME)
 
@@ -193,8 +203,8 @@ def cmake2():
 
     libd: str = '\n    '.join(addquote(equalsplit(dirs)))
     libn: str = '\n    '.join(addquote(equalsplit(libs, sep=";")))
-    cppf: str = '\n    '.join(addquote(equalsplit(oths)))
-    print(CMAKESTR.format(libd=libd, libn=libn, cppf=cppf))
+    cppl: str = '\n    '.join(addquote(equalsplit(CPPLFLAGS + oths)))
+    print(CMAKESTR.format(libd=libd, libn=libn, cppf=CPPFLAGS, cppl=cppl))
 
 
 cmake2()
