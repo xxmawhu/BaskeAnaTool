@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-09 Sat 13:51:58 CST
+# Last Updated: 2019-11-09 Sat 13:57:08 CST
 #           By: Hao-Kai SUN
-#     Update #: 165
+#     Update #: 167
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -203,8 +203,9 @@ def cmake2():
 
     libd: str = '\n    '.join(addquote(equalsplit(dirs)))
     libn: str = '\n    '.join(addquote(equalsplit(libs, sep=";")))
+    cppf: str = '\n    '.join(addquote(equalsplit(CPPFLAGS)))
     cppl: str = '\n    '.join(addquote(equalsplit(CPPLFLAGS + oths)))
-    print(CMAKESTR.format(libd=libd, libn=libn, cppf=CPPFLAGS, cppl=cppl))
+    print(CMAKESTR.format(libd=libd, libn=libn, cppf=cppf, cppl=cppl))
 
 
 cmake2()
