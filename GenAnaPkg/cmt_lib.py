@@ -6,9 +6,9 @@
 # Author:       Hao-Kai SUN
 # Created:      2019-10-29 Tue 16:19:50 CST
 # <<=====================================>>
-# Last Updated: 2019-11-09 Sat 15:11:56 CST
+# Last Updated: 2019-11-09 Sat 15:17:49 CST
 #           By: Hao-Kai SUN
-#     Update #: 170
+#     Update #: 171
 # <<======== COPYRIGHT && LICENSE =======>>
 #
 # Copyright © 2019 SUN Hao-Kai <spin.hk@outlook.com>. All rights reserved.
@@ -79,7 +79,7 @@ target_link_options(${{PROJECT_NAME}} PUBLIC
 foreach(LIBN ${{LIBNAMES}})
     find_library(TEMPLIB
         NAMES ${{LIBN}}
-        PATHS ${{LIBDIRS}}
+        PATHS ${{LIBDIRS}} ENV LD_LIBRARY_PATH
         NO_DEFAULT_PATH
     )
     if(NOT TEMPLIB)
