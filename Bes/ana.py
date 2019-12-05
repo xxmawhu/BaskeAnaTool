@@ -88,7 +88,9 @@ class ana:
             f.write("hadd -f "+i+"_all.root "+i+".*root && rm  "+ i+".*root\n")
         f.close()
         do("chmod 755 "+self.mode+"hadd.sh")
-        print("[Info] Total: {} {}".format(do("ls jobs/*/*.txt -1 | wc -l"), "jobs"))
+        print("[Info] Total: {} {}".format(
+            do("ls jobs/*/*.txt -1 | wc -l").split()[0], 
+            "jobs"))
     def sub(self):
         boss.mkdir(self.log)
         sub=hepsub.hepsub()
