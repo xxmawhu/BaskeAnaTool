@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-
 # from Bes.commands import getoutput as do
 #-----small functions-----
 def mkdir(s):

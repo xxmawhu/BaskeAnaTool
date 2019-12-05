@@ -54,7 +54,12 @@ else:
         f.close()
 
 class SubWithProcId(hepsub):
+    """
+    path: hepsub.getPath()
+       sub all jobs_%{Procid}.txt in the fildor
+    """
     def __init__(self):
         super()
+    
 
 
