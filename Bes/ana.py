@@ -1,12 +1,12 @@
 #!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
 # -*- coding: utf-8 -*-
-from Bes import boss
-import proraw
-import name
-import hepsub
 import os
-from commands import getoutput as do
-import myfunction as myfun
+from Bes import boss
+from Bes import proraw
+from Bes import name
+from Bes import hepsub
+from Bes.commands import getoutput as do
+from Bes import myfunction as myfun
 class ana:
     def __init__(self):
         self.dsts=[]

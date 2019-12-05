@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import boss
+from Bes import boss
 #------the function to select the files whose type is txt
 def findtype(files,type='.txt'):
     txt=[]

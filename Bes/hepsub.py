@@ -1,7 +1,7 @@
 #!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
 # -*- coding: utf-8 -*-
-import myfunction as m
-from commands import getoutput as do
+from Bes import myfunction as m
+from Bes.commands import getoutput as do
 import os, SubJob
 from SubJob import hep
 class hepsub:
@@ -23,7 +23,7 @@ class hepsub:
         self.findjob()
         hep.Sub(self.jobcol, "boss.condor", '.txt', self.log+'/jobid')
         s='''# delete jobs
-from commands import getoutput as do
+from Bes.commands import getoutput as do
 f=open('jobid','r')
 for i in f.readlines():
     id=str( i[0:-2])
@@ -34,7 +34,7 @@ for i in f.readlines():
         f.close()
         ss=r'''# qtate jobs
 from time import sleep
-from commands import getoutput as do
+from Bes.commands import getoutput as do
 def run(): # 1 finish
     f=open('jobid','r')
     jobs = do('hep_q -u')
