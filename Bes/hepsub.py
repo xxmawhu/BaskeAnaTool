@@ -13,6 +13,8 @@ class hepsub:
         self.log=x
     def setpath(self,x):
         self.pth=x
+    def getPath(self):
+        return self.pth
     def findjob(self):
         s=m.findfiler(self.pth)
         list.sort(s)
@@ -51,6 +53,8 @@ else:
         f.write(ss)
         f.close()
 
-
+class SubWithProcId(hepsub):
+    def __init__(self):
+        super()
 
 

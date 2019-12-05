@@ -84,7 +84,7 @@ def rootrun(files):
     f.write('rm -f rootrun.sh\n')
     f.close()
     os.chdir(mypath)
-    print (mypath)
+    print(mypath)
     os.system("chmod +x rootrun.sh")
     os.system('source '+mypath+'/'+'rootrun.sh')
     os.system('rm -f rootrun.sh')
@@ -102,13 +102,13 @@ def shrun(files):
     f.write('rm -f runSH.sh\n')
     f.close()
     os.chdir(mypath)
-    print mypath
+    print(mypath)
     os.system("chmod +x runSH.sh")
     os.system('source '+mypath+'/'+'runSH.sh')
 
 #-----hep sub--
 ###################the class to make jobs
-class subjobs:
+class subjobs(object):
     def setdstpath(self,dst,key=''):
         self._dst=dst
         files=os.listdir(self._dst)
@@ -161,7 +161,7 @@ class subjobs:
         self._jobname=name
     def _creatjob(self,i,j,k):
         self._drop()
-        _num='%04d'%k
+        _num='%d'%k
         name= self._job+'/'+self._jobname+_num+'.txt'
         f=open(name,'w')
         f.write(self._body)
@@ -179,15 +179,15 @@ class subjobs:
         n=self._n
         self._tot=len(self._s)
         each=self._tot/n
-        print "total dst files is ",self._tot
-        print  "every job contain ",each
+        print("total dst files is {}".format(self._tot))
+        print("every job contain {}".format(each))
         over=self._tot-each*n
         for i in range(0,over):
             m=each+1
-            self._creatjob(i*m+1,(i+1)*m,i+1)
+            self._creatjob(i*m+1,(i+1)*m,i)
         for i in range(over,n):
             m=each
-            self._creatjob(i*m+1+over,(i+1)*m+over,i+1)
+            self._creatjob(i*m+1+over,(i+1)*m+over,i)
 
 
 class mcevt:
