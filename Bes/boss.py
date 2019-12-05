@@ -178,11 +178,11 @@ class subjobs(object):
     def jobs(self):
         n=self._n
         self._tot=len(self._s)
-        each=self._tot/n
-        print("total dst files is {}".format(self._tot))
-        print("every job contain {}".format(each))
-        over=self._tot-each*n
-        for i in range(0,over):
+        each = int(self._tot/n)
+        print("[Info] Total .dst files is {}".format(self._tot))
+        print("[Info] Each job contains {} .dst file".format(each))
+        over = self._tot-each*n
+        for i in range(0, over):
             m=each+1
             self._creatjob(i*m+1,(i+1)*m,i)
         for i in range(over,n):

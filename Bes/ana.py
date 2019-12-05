@@ -88,7 +88,7 @@ class ana:
             f.write("hadd -f "+i+"_all.root "+i+".*root && rm  "+ i+".*root\n")
         f.close()
         do("chmod 755 "+self.mode+"hadd.sh")
-        print("Total: {} {}".format(do("ls jobs/*/*.txt -1 | wc -l"), "jobs"))
+        print("[Info] Total: {} {}".format(do("ls jobs/*/*.txt -1 | wc -l"), "jobs"))
     def sub(self):
         boss.mkdir(self.log)
         sub=hepsub.hepsub()
@@ -109,10 +109,10 @@ class ana:
         self._drop=s 
     def ajob(self,dst,name): 
         print('.........................................................')
-        print(dst)
-        print('each job contain about {} {}'.format(self.size,'G dsts'))
+        print("[Info] Process "+dst)
+        print('[Info] each job contain about {} {}'.format(self.size,'G dsts'))
         dsts = int(do('ls -1 -F '+ dst+r'  | grep -v [/$] | wc -l'))
-        print("total dsts: {}".format(dsts))
+        print("[Info] total dsts: {}".format(dsts))
         size = int( int(do('du ' + dst ).split()[0])/1024./1024./self.size )
         job=self.job+name
         root=self.rawpth+name
