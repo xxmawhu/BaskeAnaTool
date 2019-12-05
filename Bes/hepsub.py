@@ -11,6 +11,8 @@ class hepsub:
         self.log='log'
     def setlog(self,x):
         self.log=x
+    def getLog(self):
+        return self.log
     def setpath(self,x):
         self.pth=x
     def getPath(self):

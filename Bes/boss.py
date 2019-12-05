@@ -1,6 +1,10 @@
 #!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
 # -*- coding: utf-8 -*-
 import os
+from multiprocessing.pool import ThreadPool
+import time
+import logging
+logger = logging.getLogger(__name__)
 
 # from Bes.commands import getoutput as do
 #-----small functions-----
@@ -201,20 +205,30 @@ class subjobs(object):
         root += "};\n"
         f.write(root)
         f.close()
+    def _MakeOneJob(self, args):
+        self._creatjob(*args)
 
     def jobs(self):
         n = self._n
         self._tot = len(self._s)
         each = int(self._tot / n)
-        print("[Info] Total .dst files is {}".format(self._tot))
-        print("[Info] Each job contains {} .dst file".format(each))
+        logger.info("Total `.dst` files is {}".format(self._tot))
+        logger.info("Each job contains {} `.dst` file \n".format(each))
         over = self._tot - each * n
+        argsList = []
+        t0 = time.time()
         for i in range(0, over):
             m = each + 1
-            self._creatjob(i * m + 1, (i + 1) * m, i)
+            # self._creatjob(i * m + 1, (i + 1) * m, i)
+            argsList.append((i * m + 1, (i + 1) * m, i))
         for i in range(over, n):
             m = each
-            self._creatjob(i * m + 1 + over, (i + 1) * m + over, i)
+            # self._creatjob(i * m + 1 + over, (i + 1) * m + over, i)
+            argsList.append((i * m + 1 + over, (i + 1) * m + over, i))
+        with ThreadPool(processes=10) as pool:
+            pool.map(self._MakeOneJob, argsList)
+        t1 = time.time()
+        logger.debug("Time: {0:.03f}".format(t1-t0))
 
 
 class mcevt:

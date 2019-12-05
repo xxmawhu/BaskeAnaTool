@@ -5,15 +5,17 @@ from Bes import boss
 from Bes import proraw
 from Bes import name
 from Bes import hepsub
+from Bes import SubWithProcId 
 from Bes.commands import getoutput as do
 from Bes import myfunction as myfun
-
+import logging
+logger = logging.getLogger(__name__)
 
 class ana:
     def __init__(self):
         self.dsts = []
         self.body = ''
-        self.wkpth = do('pwd') + '/'
+        self.wkpth = do('pwd').split()[0] + '/'
         self.job = self.wkpth + 'jobs/'
         self.log = self.wkpth + 'log/'
         self.mode = self.wkpth + 'mode/'
@@ -77,9 +79,8 @@ class ana:
         f = open(self.log + 'list.txt', 'w')
         for i in self.dsts:
             fileList = myfun.findfile(i)
-            #print (i)
             if len(fileList) == 0:
-                print("no dst in this file, " + i)
+                logger.warning("no dst in this file, " + i)
                 continue
             for j in fileList:
                 f.write(j + '\n')
@@ -99,14 +100,16 @@ class ana:
                     ".*root\n")
         f.close()
         do("chmod 755 " + self.mode + "hadd.sh")
-        print("[Info] Total: {} {}".format(
+        logger.info("Total: {} {}".format(
             do("ls jobs/*/*.txt -1 | wc -l").split()[0], "jobs"))
 
     def sub(self):
         boss.mkdir(self.log)
-        sub = hepsub.hepsub()
+        sub = SubWithProcId.SubWithProcId()
+        # sub = hepsub.hepsub()
         sub.setlog(self.log)
-        sub.setpath(self.job)
+        logger.debug("self.job = {}".format(self.job))
+        sub.setpath(os.path.abspath(self.job))
         sub.sub()
 
     def mkadd(self, tree, cut, name, jobnm):
@@ -125,12 +128,11 @@ class ana:
         self._drop = s
 
     def ajob(self, dst, name):
-        print('.........................................................')
-        print("[Info] Process " + dst)
-        print('[Info] each job contain about {} {}'.format(
+        logger.info("Process " + dst)
+        logger.info('each job contain about {} {}'.format(
             self.size, 'G dsts'))
         dsts = int(do('ls -1 -F ' + dst + r'  | grep -v [/$] | wc -l'))
-        print("[Info] total dsts: {}".format(dsts))
+        logger.debug("total dsts: {}".format(dsts))
         size = int(int(do('du ' + dst).split()[0]) / 1024. / 1024. / self.size)
         job = self.job + name
         root = self.rawpth + name
@@ -170,7 +172,7 @@ class anaJpsi(ana):
             2017: 'add 2017-2018 Jpsi data(4.6 billion)',
             2018: 'add 2018-2019 Jpsi data(4.1 billion)'
         }
-        print(hintDict[date])
+        logger.info(hintDict[date])
         dst = Dict[date]
         ll = do('ls %s/* -d' % dst).split()
         for l in ll:
