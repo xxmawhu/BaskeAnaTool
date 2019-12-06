@@ -4,7 +4,7 @@ from Bes import myfunction as m
 from Bes.commands import getoutput as do
 import os, SubJob
 from SubJob import hep
-class hepsub:
+class hepsub(object):
     def __init__(self):
         self.jobcol=[]
         self.pth=''
