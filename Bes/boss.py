@@ -225,8 +225,9 @@ class subjobs(object):
             m = each
             # self._creatjob(i * m + 1 + over, (i + 1) * m + over, i)
             argsList.append((i * m + 1 + over, (i + 1) * m + over, i))
-        with ThreadPool(processes=10) as pool:
-            pool.map(self._MakeOneJob, argsList)
+        pool = ThreadPool(processes=10)
+        pool.map(self._MakeOneJob, argsList)
+        pool.close()
         t1 = time.time()
         logger.debug("Time: {0:.03f}".format(t1-t0))
 
