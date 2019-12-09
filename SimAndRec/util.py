@@ -1,6 +1,6 @@
 # useful function
 import string, sys, os
-from commands import getoutput as do
+from Bes.commands import getoutput as do
 from SubJob import hep
 def name(dsts,m):
     name=[]

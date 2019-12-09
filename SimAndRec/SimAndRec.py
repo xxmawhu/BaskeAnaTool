@@ -1,7 +1,7 @@
 from Zeus import zeus
 import NUM
 import util,os, inspect
-from commands import getoutput as do
+from Bes.commands import getoutput as do
 class process():
     def __init__(self, _simTemp, _recTemp):
         self._simSvc = zeus()
@@ -90,11 +90,11 @@ class process():
             _NUMFILE = NUM.NUMFILE
             _NUM = int(do('cat %s'%(_NUMFILE)))+1
             do('echo "%d" > %s '%(_NUM, _NUMFILE))
-            fnm = "jobs_%06d.sh"%(_NUM)
+            fnm = "jobs_%d.sh"%(i)
             ffnm = os.path.join(self._subPth, fnm)
             f=open(ffnm,'w')
             f.write("boss.exe " +self._simJobs[i]+'\n')
-            f.write("sleep 100\n")
+            f.write("sleep 3\n")
             f.write("boss.exe " +self._recJobs[i]+'\n')
             f.close()
             jobList.append(os.path.abspath(ffnm))
