@@ -152,9 +152,9 @@ def Sub(files,
         return
     # list.sort(files)
     print("Sub %d jobs......"%(len(files)))
-    for i in progressbar.progressbar(range(len(files)/20)):
+    pool = Pool(2)
+    for i in progressbar.progressbar(range(len(files))):
         JOB = os.path.split(files[i])
-        pool = Pool(2)
         getoutput('cd %s; %s %s'%(JOB[0], "chmod +x", JOB[1]))
         out = getoutput('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
         #print('cd %s; %s %s'%(JOB[0], subcommand, JOB[1]))
