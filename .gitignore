@@ -112,3 +112,4 @@ SimAndRec/Ana*.py
 SimAndRec/init*.py
 NUM.py
 __pycache__/
+.NUM
