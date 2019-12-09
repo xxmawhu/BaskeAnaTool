@@ -2,6 +2,7 @@ from Zeus import zeus
 import NUM
 import util,os, inspect
 from Bes.commands import getoutput as do
+import time
 class process():
     def __init__(self, _simTemp, _recTemp):
         self._simSvc = zeus()
@@ -11,7 +12,8 @@ class process():
         self._numOfJob = 1
         self._decayCard = "test.dec"
         self._totEvts =  10
-        self._seedBegin  = 0
+        T0 = 1572888530
+        self._seedBegin  = int(time.time() - T0)
         self._datPth = "."
         self._simJobs=[]
         self._recJobs=[]
@@ -63,10 +65,10 @@ class process():
             else:
                 self._simSvc.SetEvtMax(evts)
                 self._recSvc.SetEvtMax(evts)
-            _NUMFILE = NUM.NUMFILE
-            _NUM = int(do('cat %s'%(_NUMFILE)))+1
-            self._simSvc.SetSeed(self._seedBegin + _NUM + i)
-            self._recSvc.SetSeed(self._seedBegin + _NUM + i)
+            # _NUMFILE = NUM.NUMFILE
+            # _NUM = int(do('cat %s'%(_NUMFILE)))+1
+            self._simSvc.SetSeed(self._seedBegin + i)
+            self._recSvc.SetSeed(self._seedBegin + i)
             simtxt = os.path.join(self._subPth, "sim_%04d.txt"%(i+1))
             self._simJobs.append("sim_%04d.txt"%(i+1))
             rectxt = os.path.join(self._subPth, "rec_%04d.txt"%(i+1))
