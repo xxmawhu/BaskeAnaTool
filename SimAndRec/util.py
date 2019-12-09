@@ -32,20 +32,13 @@ def mkdir(s):
     if(not os.path.isdir(s)):
         os.makedirs(s)
 def hepsub(files):
-    hep.Sub(files);
+    path = os.path.split(files[0])[0]
+    do("cd {PATH}; hep_sub -g physics {ProcId} -n {NUM}".format(
+    PATH = path,
+    NUM=len(files),
+    ProcID=r"jobs_%{ProcID}.sh"
+        ))
     return
-    if len(files)>0:
-        mypath=os.getcwd()
-        print ("current path\t",mypath)
-        for i in files:
-            path=os.path.split(i)[0]
-            File=os.path.split(i)[1]
-            name=os.path.splitext(i)[0]
-            os.chdir(path)
-            os.system('chmod +x '+File)
-            os.system('/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics '+File)
-            os.chdir(mypath)
-        os.chdir(mypath)#return to my work path
 def getOpt():
     rs = []
     for i in sys.argv:
