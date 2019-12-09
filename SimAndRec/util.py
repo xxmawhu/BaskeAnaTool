@@ -33,12 +33,17 @@ def mkdir(s):
         os.makedirs(s)
 def hepsub(files):
     path = os.path.split(files[0])[0]
-    do("cd {PATH}; hep_sub -g physics {ProcId} -n {NUM}".format(
+    do("cd {PATH}; chmod +x *.sh".format(
+    PATH = path
+        ))
+    out = do("cd {PATH}; hep_sub -g physics {ProcId} -n {NUM}".format(
     PATH = path,
     NUM=len(files),
-    ProcID=r"jobs_%{ProcID}.sh"
+    ProcId=r"jobs_%{ProcId}.sh"
         ))
-    return
+    job_Id = out.split("\n")[-2].split()[-1]
+    print("submitted to cluster {}".format(job_Id))
+    return job_Id
 def getOpt():
     rs = []
     for i in sys.argv:
