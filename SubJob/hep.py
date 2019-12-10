@@ -14,7 +14,7 @@ import progressbar
 from commands import getoutput
 import subprocess
 from multiprocessing import Pool
-import util
+from SubJob import util
 #hep_sub = "/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/hep_sub -g physics"
 def SubOneJob(file_sub):
     """

@@ -1,2 +1,2 @@
 # this package aim at make boss analysis job 
-import hep
+from SubJob import *

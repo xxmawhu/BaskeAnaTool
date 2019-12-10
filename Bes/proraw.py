@@ -1,6 +1,5 @@
-#!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from Bes import util
 from Bes import boss
 
 
