@@ -37,6 +37,9 @@ class subjobs(object):
         else:
             return True
 
+    def setdstpath(self, dstdir, key=""):
+        self.setInputDstDir(dstdir, key)
+
     def drop(self, dsts):
         self._bad = dsts
 
