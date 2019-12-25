@@ -5,9 +5,9 @@ from Bes import boss
 
 class proraw:
     def __init__(self):
-        self.rawpth = 'root'
-        self.outpth = 'mode'
-        self.job = 'cxx'
+        self.rawpth = 'rawFile'
+        self.outpth = 'merged'
+        self.job = 'hadd'
         self.tree = "sig"
         self.cut = ""
         self.name = 'example'

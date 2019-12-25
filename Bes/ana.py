@@ -50,8 +50,9 @@ class ana:
             self.wkpth = x + '/'
         self.job = self.wkpth + 'jobs/'
         self.log = self.wkpth + 'log/'
-        self.mode = self.wkpth + 'mode/'
-        self.rawpth = self.wkpth + 'root/'
+        self.mode = self.wkpth + 'merged/'
+        self.rawpth = self.wkpth + 'rawFile/'
+        self.cxxpth = self.wkpth + 'hadd/'
 
     def mkdir(self):
         util.mkdir(self.job)
@@ -160,6 +161,7 @@ class ana:
         j.setname(self.rootnm)
         j.setdstpath(dst)
         j.setjobpath(job)
+        j.setProcesser(20)
         j.drop(self._drop)
         j.setrootpath(root)
         j.jobs()

@@ -9,4 +9,6 @@ j.setjobname("jobs_")
 j.setInputDstDir(dirList[0])
 j.setjobpath("test")
 j.setrootpath("the_root_path")
-j.jobs()
+for i in range(1, 50):
+    j.setProcesser(i)
+    j.jobs()
