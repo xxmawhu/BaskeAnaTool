@@ -61,13 +61,14 @@ class SubWithProcId(hepsub.hepsub):
         logger.info("sub all jobs successful!")
         logger.info("Sub jobs consumes {0:.3f} s".format(t1 - t0))
         with open(self.getLog() + "/.id", 'w') as f:
-            for i in numList:
+            f.write("{} {}\n".format(" jobID ", "jobdir"))
+            for i, jobdir in zip(numList, jobsList):
                 try:
                     float(i)
                     logger.info("job ID: {}".format(i))
-                    f.write("{}\n".format(i))
+                    f.write("{} {}\n".format(i, jobdir))
                 except Expection as e:
-                    pass
+                    logger.error(e)
 
     def sub(self):
         """
