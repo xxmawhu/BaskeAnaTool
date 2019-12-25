@@ -123,8 +123,8 @@ def shrun(files):
     os.system('source ' + mypath + '/' + 'runSH.sh')
 
 
-#-----hep sub--
-###################the class to make jobs
+# -----hep sub--
+# ##################the class to make jobs
 class subjobs(object):
     def setdstpath(self, dst, key=''):
         self._dst = dst
@@ -231,77 +231,3 @@ class subjobs(object):
         t1 = time.time()
         logger.debug("Time: {0:.03f}".format(t1-t0))
 
-
-class mcevt:
-    def __init__(self):
-        self.seed = 110
-        self_boss = 'b702p1'
-        self.run = 34480
-        self.rawpath = '.'
-        self.dec = ''
-        self.events = 1000
-        self.name = 'sim'
-
-    def setseed(self, n):
-        self.seed = n
-
-    def setevents(self, n):
-        self.events = n
-
-    def setdec(self, s):
-        self.dec = s
-
-    def setrawpath(self, p):
-        self.rawpath = p
-        mkdir(self.rawpath)
-
-    def setjobpath(self, s):
-        self.job = s
-        mkdir(self.job)
-
-    def setdstpath(self, s):
-        self.dstpath = s
-        mkdir(self.dstpath)
-
-    def simjob(self, name='sim'):
-        self.name = self.job + '/' + name + '.txt'
-        f = open(self.name, 'w')
-        self.raw = self.rawpath + '/' + name + '.rtraw'
-        self.dst = self.dstpath + '/' + name + '.dst'
-        s = joboption.simevt(self.dec, self.raw, self.seed, self.run,
-                             self.events)
-        f.write(s)
-        f.close()
-
-    def recjob(self, name='rec'):
-        rec = self.job + '/' + name + '.txt'
-        f = open(rec, 'w')
-        s = joboption.evtrec(self.seed, self.raw, self.dst)
-        f.write(s)
-        f.close()
-
-    def setboss(self, boss):
-        self._boss = boss
-
-    def subjob(self, k=1):
-        name1 = 'sim_' + '%0.3d' % k
-        self.simjob(name1)
-        name2 = 'rec_' + '%0.3d' % k
-        self.recjob(name2)
-        sub = self.job + '/simandrec_' + str(k) + '.sh'
-        f = open(sub, 'w')
-        l0 = '#!/bin/bash\n'
-        l01 = 'source /afs/ihep.ac.cn/users/m/maxx/.' + self._boss + '\n'
-        l1 = 'cd ' + self.job + '\n'
-        l2 = 'boss.exe ' + name1 + '.txt&&\n'
-        l3 = 'sleep 10\n'
-        l4 = 'boss.exe ' + name2 + '.txt\n'
-        l5 = 'rm -f sub_' + sub + '\n'
-        f.write(l0 + l01 + l1 + l2 + l3 + l4)
-        os.system('chmod +x ' + sub)
-        os.system('hep_sub -g physics ' + sub)
-
-    def subjobs(self, n):
-        for i in range(0, n):
-            self.seed += i * 10
-            self.subjob(i)

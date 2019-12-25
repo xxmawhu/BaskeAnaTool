@@ -1,13 +1,14 @@
-#!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from Bes import boss
+from Bes import subjobs
 from Bes import proraw
 from Bes import name
-from Bes import hepsub
-from Bes import SubWithProcId 
+# from Bes import hepsub
+from Bes import SubWithProcId
 from Bes.commands import getoutput as do
 from Bes import myfunction as myfun
+import util
 import logging
 logger = logging.getLogger(__name__)
 
@@ -19,9 +20,9 @@ class ana:
         self.wkpth = do('pwd').split()[0] + '/'
         self.job = self.wkpth + 'jobs/'
         self.log = self.wkpth + 'log/'
-        self.mode = self.wkpth + 'mode/'
-        self.rawpth = self.wkpth + 'root/'
-        self.cxxpth = self.wkpth + 'cxx/'
+        self.mode = self.wkpth + 'merged/'
+        self.rawpth = self.wkpth + 'rawFile/'
+        self.cxxpth = self.wkpth + 'hadd/'
         self.rootnm = 'FILE'
         self.size = 1.0
         self.cut = []
@@ -38,6 +39,9 @@ class ana:
         else:
             self.name.append(name)
 
+    def setCutForTree(self, tree, cut, name):
+        self.addcut(tree, cut, name)
+
     def setpath(self, x):
         self.wkpth = x
         if x[-1] == '/':
@@ -50,11 +54,11 @@ class ana:
         self.rawpth = self.wkpth + 'root/'
 
     def mkdir(self):
-        boss.mkdir(self.job)
-        boss.mkdir(self.log)
-        boss.mkdir(self.mode)
-        boss.mkdir(self.rawpth)
-        boss.mkdir(self.cxxpth)
+        util.mkdir(self.job)
+        util.mkdir(self.log)
+        util.mkdir(self.mode)
+        util.mkdir(self.rawpth)
+        util.mkdir(self.cxxpth)
 
     def maxsize(self, x):
         self.size = x
@@ -67,6 +71,9 @@ class ana:
         t2 = '\nEventCnvSvc.digiRootInputFile = {\n'
         self.body = x + t1 + t2
 
+    def setJobOption(self, joboptions):
+        self.setjobhead(joboptions)
+
     def addst(self, x):
         t = len(x)
         if x[-1] == '/':
@@ -74,6 +81,9 @@ class ana:
         else:
             adst = x[0:t]
         self.dsts.append(adst)
+
+    def addDataSet(self, dateSet):
+        self.addst(dateSet)
 
     def make(self):
         self.mkdir()
@@ -105,9 +115,8 @@ class ana:
             do("ls jobs/*/*.txt -1 | wc -l").split()[0], "jobs"))
 
     def sub(self):
-        boss.mkdir(self.log)
+        util.mkdir(self.log)
         sub = SubWithProcId.SubWithProcId()
-        # sub = hepsub.hepsub()
         sub.setlog(self.log)
         logger.debug("self.job = {}".format(self.job))
         sub.setpath(os.path.abspath(self.job))
@@ -137,9 +146,9 @@ class ana:
         size = int(int(do('du ' + dst).split()[0]) / 1024. / 1024. / self.size)
         job = self.job + name
         root = self.rawpth + name
-        boss.mkdir(job)
-        boss.mkdir(root)
-        j = boss.subjobs()
+        util.mkdir(job)
+        util.mkdir(root)
+        j = subjobs.subjobs()
         j.setbody(self.body)
         jobnum = self._num
         if jobnum < size:
@@ -155,26 +164,3 @@ class ana:
         j.setrootpath(root)
         j.jobs()
 
-
-class anaJpsi(ana):
-    def __init__(self):
-        ana.__init__(self)
-
-    def addJpsi(self, date):
-        Dict = {
-            2009: '/besfs3/offline/data/703-1/jpsi/round02/dst',
-            2012: '/besfs3/offline/data/703-1/jpsi/round05/dst',
-            2017: '/bes3fs/offline/data/704-1/jpsi/round11/dst',
-            2018: '/bes3fs/offline/data/704-1/jpsi/round12/dst'
-        }
-        hintDict = {
-            2009: 'add 2009 Jpsi data(0.2 billion)',
-            2012: 'add 2012 Jpsi data(1.1 billion)',
-            2017: 'add 2017-2018 Jpsi data(4.6 billion)',
-            2018: 'add 2018-2019 Jpsi data(4.1 billion)'
-        }
-        logger.info(hintDict[date])
-        dst = Dict[date]
-        ll = do('ls %s/* -d' % dst).split()
-        for l in ll:
-            ana.addst(self, l)
