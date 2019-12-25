@@ -11,6 +11,7 @@ from Bes import myfunction as myfun
 import logging
 logger = logging.getLogger(__name__)
 
+
 class ana:
     def __init__(self):
         self.dsts = []
