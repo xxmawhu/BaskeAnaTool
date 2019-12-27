@@ -52,7 +52,12 @@ class SubWithProcId(hepsub.hepsub):
         t0 = time.time()
         if len(jobsList) == 1:
             logger.info("Sub all Jobs in {}".format(jobsList[0]))
-            self._subJobInOneDir(jobsList[0])
+            jobId = self._subJobInOneDir(jobsList[0])
+            logger.info("job ID: {}".format(jobId))
+            f = open(self.getLog() + "/.id", 'w')
+            f.write("{} {}\n".format(" jobID ", "jobdir"))
+            f.write("{} {}\n".format(jobdir, jobsList[0]))
+            f.close()
             return
         t = ThreadPool(processes=5)
         numList = t.map(self._subJobInOneDir, jobsList)
