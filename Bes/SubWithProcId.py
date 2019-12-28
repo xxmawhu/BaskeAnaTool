@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from Bes import myfunction as m
-from Bes.commands import getoutput as do
+# from Bes import myfunction as m
+# from Bes.commands import getoutput as do
 from Bes import hepsub
 import os
 from Bes.commands import getoutput
@@ -67,7 +67,7 @@ class SubWithProcId(hepsub.hepsub):
                     logger.info("job ID: {}".format(i))
                     f.write("{}\n".format(i))
                 except Expection as e:
-                    pass
+                    logger.error(e)
 
     def sub(self):
         """
