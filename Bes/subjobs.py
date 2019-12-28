@@ -18,6 +18,7 @@ class subjobs(object):
         self._bad = []
         self._jobname = 'job'
         self._dstFileList = []
+        self._nprocesser = 20
 
     def setInputDstDir(self, dstdir, key=''):
         self._inputDstDir = dstdir
@@ -78,11 +79,9 @@ class subjobs(object):
         """
         dst = ''
         for k in range(i, j):
-            adstfile = self._inputDstDir + '/' + self._dstFileList[k-1]
-            dst += '    "{}",\n'.format(adstfile)
+            dst += '    "{}",\n'.format(self._dstFileList[k-1])
         # add the last file without `,`
-        adstfile = self._inputDstDir + '/' + self._dstFileList[j-1]
-        dst += '    "{}"\n'.format(adstfile)
+        dst += '    "{}"\n'.format(self._dstFileList[j-1])
         return dst
 
     def setbody(self, s):
@@ -109,15 +108,19 @@ class subjobs(object):
         f.write(self._process(i, j))
         f.write('};\n')
         root = 'NTupleSvc.output={\n'
-        root += '\t"' + self._NTupleFile
-        root += " DATAFILE = '{}/{}.root' OPT= 'new' type='ROOT'\"};".format(
+        root += '    "' + self._NTupleFile
+        root += " DATAFILE = '{}/{}.root' OPT= 'new' type='ROOT'".format(
                 self._root,
                 self._outFilePrefix+str(jobindex))
+        root += '"\n};'
         f.write(root)
         f.close()
 
     def _MakeOneJob(self, args):
         self._creatjob(*args)
+
+    def setProcesser(self, nprocessor):
+        self._nprocesser = nprocessor
 
     def jobs(self):
         n = self._n
@@ -136,7 +139,7 @@ class subjobs(object):
             m = each
             # self._creatjob(i * m + 1 + over, (i + 1) * m + over, i)
             argsList.append((i * m + 1 + over, (i + 1) * m + over, i))
-        pool = ThreadPool(processes=10)
+        pool = ThreadPool(processes=self._nprocesser)
         pool.map(self._MakeOneJob, argsList)
         pool.close()
         t1 = time.time()
