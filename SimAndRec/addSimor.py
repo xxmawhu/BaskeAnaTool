@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import Gen
 name = ["Jpsi", "NewJpsi", "Psi2S"]
 simff = ["template/simJpsi.txt", 
