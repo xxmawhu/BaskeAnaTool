@@ -114,3 +114,4 @@ NUM.py
 __pycache__/
 .NUM
 test*
+ana*.py
