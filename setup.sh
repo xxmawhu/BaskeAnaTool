@@ -1,4 +1,5 @@
 #export PATH=/afs/ihep.ac.cn/soft/common/python27_sl65/bin:$PATH
+# status="$(git pull)"
 BaskDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PYTHONPATH=${BaskDIR}:$PYTHONPATH
 source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
