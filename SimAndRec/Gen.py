@@ -74,3 +74,14 @@ elif '-make' in util.getArv() :
         f = open("setup.csh", 'w')
         f.write(setup_tcsh + '\n')
         f.close()
+        setup_zsh = ''
+        for line in open("setup.zsh").readlines():
+            if "Sim%s" % (self._name) in line:
+                continue
+            setup_zsh += line
+        setup_zsh += 'alias Sim%s="python ${SIMANDRECDIR}/init%s.py"' % (
+            self._name, self._name)
+        #print (setup_bash)
+        f = open("setup.zsh", 'w')
+        f.write(setup_zsh + '\n')
+        f.close()

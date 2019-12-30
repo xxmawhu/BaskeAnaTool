@@ -8,4 +8,7 @@ source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
 # shellcheck source=short/setup.sh
 source "${BaskDIR}/short/setup.zsh"
 # shellcheck source=SimAndRec/setup.sh
+cd ${BaskDIR}/SimAndRec 
+python addSimor.py
+cd ${BaskDIR}
 source "${BaskDIR}/SimAndRec/setup.zsh"
