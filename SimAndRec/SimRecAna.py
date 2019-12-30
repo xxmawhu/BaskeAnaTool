@@ -3,7 +3,6 @@ import Ana
 import util, os, inspect
 import SimAndRec
 from Bes.commands import getoutput as do
-from NUM import NUMFILE
 
 
 class process(SimAndRec.process):

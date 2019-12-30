@@ -1,5 +1,4 @@
 from Zeus import zeus
-import NUM
 import util, os, inspect
 from Bes.commands import getoutput as do
 import time
@@ -72,8 +71,6 @@ class process():
             else:
                 self._simSvc.SetEvtMax(evts)
                 self._recSvc.SetEvtMax(evts)
-            # _NUMFILE = NUM.NUMFILE
-            # _NUM = int(do('cat %s'%(_NUMFILE)))+1
             self._simSvc.SetSeed(self._seedBegin + i)
             self._recSvc.SetSeed(self._seedBegin + i)
             simtxt = os.path.join(self._subPth, "sim_%04d.txt" % (i + 1))
@@ -97,9 +94,6 @@ class process():
         curFF = inspect.stack()[1][1]
         curPth = os.path.split(curFF)[0]
         for i in range(self._numOfJob):
-            _NUMFILE = NUM.NUMFILE
-            _NUM = int(do('cat %s' % (_NUMFILE))) + 1
-            do('echo "%d" > %s ' % (_NUM, _NUMFILE))
             fnm = "jobs_%d.sh" % (i)
             ffnm = os.path.join(self._subPth, fnm)
             f = open(ffnm, 'w')

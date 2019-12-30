@@ -7,9 +7,3 @@ source ${BaskDIR}/SimAndRec/setup.sh
 
 #use this python
 source /workfs/bes/maxx/local/python-2.7.14/setup.sh
-if [ -f ${BaskDIR}/bin/hep_sub  ] ;
-then
-    /bin/rm -f ${BaskDIR}/bin/hep_sub
-fi
-ln -s  ${BaskDIR}/short/hepsubnew.py ${BaskDIR}/bin/hep_sub
-export PATH=$PATH:${BaskDIR}/bin
