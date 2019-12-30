@@ -43,9 +43,7 @@ class process(SimAndRec.process):
         curFF = inspect.stack()[1][1]
         curPth = os.path.split(curFF)[0]
         for i in range(self._numOfJob):
-            _NUM = int(do('cat %s' % (NUMFILE))) + 1
-            do('echo "%d" > %s ' % (_NUM, NUMFILE))
-            fnm = "jobs_%06d.sh" % (_NUM)
+            fnm = "jobs_%d.sh" % (i)
             ffnm = os.path.join(self._subPth, fnm)
             f = open(ffnm, 'w')
             f.write("boss.exe " + self._simJobs[i] + '\n')
