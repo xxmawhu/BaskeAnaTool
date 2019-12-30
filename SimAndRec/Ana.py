@@ -1,4 +1,4 @@
-#!/afs/ihep.ac.cn/soft/common/python27_sl65/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 class ana():
     def __init__(self, opt='', dst='', out=''):
