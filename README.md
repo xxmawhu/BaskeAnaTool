@@ -77,4 +77,4 @@ g.Make()
 执行gen.py即可。需要注意一点，模板之中不能出现断行。
 
 ### 有问题？
-请联系 maxx@ihep.ac.cn
+请邮件联系maxx@ihep.ac.cn
