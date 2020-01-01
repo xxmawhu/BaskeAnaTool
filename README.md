@@ -77,17 +77,20 @@ Hepsub命令含有选项可以控制提交何种作业，包括
 
 ### 添加新的模拟类型
 需要准备好模拟和重建样板，比如: template/simExample.txt 和
-template/recExample.txt, 在SimAndRec下，修改gen.py
+template/recExample.txt, 在SimAndRec下，修改gen.py文件为
 ```python
+import Gen
+
+
 name = "Example"
 simff="template/simExample.txt"
 recff="template/recExample.txt"
-import Gen
 g = Gen.process(name, simff, recff)
 g.Make()
 ```
 
-执行gen.py即可。需要注意一点，模板之中不能出现断行。
+执行gen.py即可，执行成功后会自动生成一个脚本来做生成批量的作业。需要注意一点，模板之中不能出现断行，因为程序功能有限，不可能为单个用户的需求去改变
+正个框架，c++语言有很多炫的特性，如果实现支持所有的特殊就等于做出一个编译器来了，这是本系统不能承受的。
 
 ### 有问题？
 请邮件联系maxx@ihep.ac.cn
