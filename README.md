@@ -1,8 +1,10 @@
 # BaskeAnaTool
 ## 如何安装
 
-首先要从github上拷贝下来，只需要下面一个命令，因为服务器上有装好的git软件，不需要安装额外的软件。
-```git clone https://github.com/xxmawhu/BaskeAnaTool.git```
+首先要从github上拷贝下来，只需要下面一个命令，因为服务器上有装好的git软件，不需要安装额外的软件。命令为
+```sh
+git clone https://github.com/xxmawhu/BaskeAnaTool.git
+```
 
 如何使用
 =====================================
