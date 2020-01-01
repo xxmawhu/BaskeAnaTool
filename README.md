@@ -80,11 +80,9 @@ Hepsub命令含有选项可以控制提交何种作业，包括
 template/recExample.txt, 在SimAndRec下，修改gen.py文件为
 ```python
 import Gen
-
-
 name = "Example"
-simff="template/simExample.txt"
-recff="template/recExample.txt"
+simff = "template/simExample.txt"
+recff = "template/recExample.txt"
 g = Gen.process(name, simff, recff)
 g.Make()
 ```
