@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from multiprocessing.pool import ThreadPool
+#from multiprocessing.pool import ThreadPool
+from concurrent.futures import ProcessPoolExecutor
 import time
 import glob
 import logging
@@ -139,7 +140,7 @@ class subjobs(object):
             m = each
             # self._creatjob(i * m + 1 + over, (i + 1) * m + over, i)
             argsList.append((i * m + 1 + over, (i + 1) * m + over, i))
-        pool = ThreadPool(processes=self._nprocesser)
+        pool = ProcessPoolExecutor(processes=self._nprocesser)
         pool.map(self._MakeOneJob, argsList)
         pool.close()
         t1 = time.time()
