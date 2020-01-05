@@ -10,9 +10,10 @@ setenv BaskDIR `dirname $BasketAnaTool_dir`
 
 setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 
+set cwd=`pwd`
 cd ${BaskDIR}/SimAndRec 
 python addSimor.py
-cd ${BaskDIR}
+cd ${cwd}
 source ${BaskDIR}/SimAndRec/setup.csh
 source ${BaskDIR}/short/setup.csh
 #use this python
