@@ -10,11 +10,13 @@ setenv BaskDIR `dirname $BasketAnaTool_dir`
 
 setenv PYTHONPATH ${BaskDIR}:$PYTHONPATH
 
+# use this python
+# this python version work well
+source /workfs/bes/maxx/local/python-2.7.14/setup.csh
+
 set cwd=`pwd`
 cd ${BaskDIR}/SimAndRec 
 python addSimor.py
 cd ${cwd}
 source ${BaskDIR}/SimAndRec/setup.csh
 source ${BaskDIR}/short/setup.csh
-#use this python
-source /workfs/bes/maxx/local/python-2.7.14/setup.csh

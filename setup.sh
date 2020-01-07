@@ -2,13 +2,18 @@
 # status="$(git pull)"
 cwd="$(pwd)"
 BaskDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
 export PYTHONPATH=${BaskDIR}:$PYTHONPATH
-source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
+
+# please use this python
+# this python version work well
+source /workfs/bes/maxx/local/python-2.7.14/setup.sh
+
 source ${BaskDIR}/short/setup.sh
 cd ${BaskDIR}/SimAndRec 
+which python
+#alias python="/besfs/users/lihb/software/SL6/python-2.7.16/bin/python"
 python addSimor.py
 cd ${cwd}
 source ${BaskDIR}/SimAndRec/setup.sh
 
-#use this python
-source /workfs/bes/maxx/local/python-2.7.14/setup.sh
