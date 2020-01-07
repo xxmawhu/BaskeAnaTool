@@ -2,7 +2,6 @@
 # status="$(git pull)"
 cwd="$(pwd)"
 BaskDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-#source /besfs/users/lihb/software/SL6/python-2.7.16/thispython.sh
 export PYTHONPATH=${BaskDIR}:$PYTHONPATH
 
 # please use this python
