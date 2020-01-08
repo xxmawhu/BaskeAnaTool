@@ -4,19 +4,27 @@ from Bes import myfunction as m
 from Bes.commands import getoutput as do
 import os, SubJob
 from SubJob import hep
+
+
 class hepsub(object):
+
     def __init__(self):
         self.jobcol=[]
         self.pth=''
         self.log='log'
+
     def setlog(self,x):
         self.log=x
+
     def getLog(self):
         return self.log
+
     def setpath(self,x):
         self.pth=x
+
     def getPath(self):
         return self.pth
+
     def findjob(self):
         s=m.findfiler(self.pth)
         list.sort(s)
@@ -62,6 +70,3 @@ class SubWithProcId(hepsub):
     """
     def __init__(self):
         super()
-    
-
-

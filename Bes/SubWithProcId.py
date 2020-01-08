@@ -18,6 +18,7 @@ class SubWithProcId(hepsub.hepsub):
     path: hepsub.getPath()
        sub all jobs_%{ProcId}.txt in the fildor
     """
+
     def __init__(self):
         super(SubWithProcId, self).__init__()
 
@@ -56,7 +57,7 @@ class SubWithProcId(hepsub.hepsub):
             logger.info("job ID: {}".format(jobId))
             f = open(self.getLog() + "/.id", 'w')
             f.write("{} {}\n".format(" jobID ", "jobdir"))
-            f.write("{} {}\n".format(jobdir, jobsList[0]))
+            f.write("{} {}\n".format(jobId, jobsList[0]))
             f.close()
             return
         t = ThreadPool(processes=5)
@@ -72,7 +73,7 @@ class SubWithProcId(hepsub.hepsub):
                     float(i)
                     logger.info("job ID: {}".format(i))
                     f.write("{} {}\n".format(i, jobdir))
-                except Expection as e:
+                except Exception as e:
                     logger.error(e)
 
     def sub(self):
