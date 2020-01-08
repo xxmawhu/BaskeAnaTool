@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-#from multiprocessing.pool import ThreadPool
-from concurrent.futures import ProcessPoolExecutor
+from multiprocessing.pool import ThreadPool as ProcessPoolExecutor
+# from concurrent.futures import ProcessPoolExecutor
 import time
 import glob
 import logging
@@ -146,7 +146,6 @@ class subjobs(object):
         t1 = time.time()
         logger.debug("Time: {0:.03f}".format(t1-t0))
 
+
 if __name__ == "__main__":
     pass
-
-
