@@ -79,7 +79,7 @@ def query(idfile, jobsDT):
                           "%s" % str(num[2]).ljust(6),
                           "%s" % str(num[3]).ljust(6),
                           "%.2f  " % (num[0] / numT),
-                          "%.2f" % (num[0] + num[1]) / numT])
+                          "%.2f" % ((num[0] + num[1]) / numT)])
         else:
             tmp = "-1    "
             jobNO.append([jobIDs[i], jobDirs[i]] + 7 * [tmp])
