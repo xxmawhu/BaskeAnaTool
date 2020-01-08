@@ -10,7 +10,7 @@ source /workfs/bes/maxx/local/python-2.7.14/setup.sh
 
 source ${BaskDIR}/short/setup.sh
 cd ${BaskDIR}/SimAndRec 
-which python
+#which python
 #alias python="/besfs/users/lihb/software/SL6/python-2.7.16/bin/python"
 python addSimor.py
 cd ${cwd}
