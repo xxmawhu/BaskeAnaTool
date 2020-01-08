@@ -78,6 +78,7 @@ def query(idfile, jobsDT):
                           "%s" % str(num[1]).ljust(6),
                           "%s" % str(num[2]).ljust(6),
                           "%s" % str(num[3]).ljust(6),
+                          "%s" % str(numT).ljust(6),
                           "%.2f  " % (num[0] / numT),
                           "%.2f" % ((num[0] + num[1]) / numT)])
         else:
@@ -87,9 +88,10 @@ def query(idfile, jobsDT):
     for ji in jobIN:
         printlist(ji)
 
-    sys.stdout.write("\nThere is NO such jobID on computing farms: \n")
-    for jn in jobNO:
-        printlist(jn)
+    if len(jobNO) > 0:
+        sys.stdout.write("\nThere is NO such jobID on computing farms: \n")
+        for jn in jobNO:
+            printlist(jn)
 
 
 def skey(x):
