@@ -120,6 +120,7 @@ def main():
         sys.stdout.write('\n')
         sys.stdout.write('\n')
         sys.stdout.write(content[-1])
+        sys.stdout.write('\n')
     elif len(arg) == 2:
         sdtc = makeDT(sortc)
         query(arg[1], sdtc)
