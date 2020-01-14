@@ -6,7 +6,7 @@ from Bes.ana import ana
 
 class anaJpsi(ana):
     def __init__(self):
-        super()
+        super(anaJpsi, self).__init__()
         # ana.__init__(self)
 
     def addJpsi(self, date):
@@ -26,4 +26,6 @@ class anaJpsi(ana):
         dst = Dict[date]
         ll = do('ls %s/* -d' % dst).split()
         for l in ll:
+            if "2019jpsi" in l:
+                continue
             ana.addst(self, l)

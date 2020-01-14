@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ana:
+class ana(object):
     def __init__(self):
         self.dsts = []
         self.body = ''
