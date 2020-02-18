@@ -1,94 +1,219 @@
 # BaskeAnaTool
-## 如何安装
+The package based on Python works independent of BOSS.
+"BaskeAnaTool" means a basket of ana useful tools. You can use it to submit jobs
+to the computer servers, also generate simulation jobs, check the jobs status,
+check the whether the jobs is successful according to the job log files. 
 
-首先要从github上拷贝下来，只需要下面一个命令，因为服务器上有装好的git软件，不需要安装额外的软件。命令为
+Before using the package, I suggest you to read the "Readme.md" carefully. The
+Chinese version of "Readme.md" is also available now.
+
+## How to install
+First, you need to clone the repository from "github.com"
 ```sh
 git clone https://github.com/xxmawhu/BaskeAnaTool.git
 ```
-
-如何使用
-=====================================
-使用只需要下列一个命令，不需要额外的要求。这是针对IHEP服务器设置的环境，个人电脑上不能保证能正常使用。
-
-   `source setup.sh`
-
-
-有哪些功能
-=========
-
-## 批量提交作业 "Hepsub"
-### 两种典型的作业
-常用的两种作业为：BOSS作业，Bash作业。前者用boss.condor提交，后者用hep_sub进行提交。这是IHEP服务器提供的两种接口。
-Hepsub命令含有选项可以控制提交何种作业，包括
-   * -txt
-   * -sh
-
-前者用来提交BOSS作业，后者用来提交Bash文件作业。交作业的时候请务必指定作业类型。建议养成一个好习惯，
-不要所有的文件都没有后缀，不同类型的文件加上相应的后缀是大有裨益的。
-更复杂的任务可以通过一下的选项实现，这些选项可以单个或多个一起使用。
-#### 其他的选项
-   * 指定文件或文件夹
-
-     比如 `Hepsub -sh jobs`就是将文件夹`jobs`下面的所有文件都交到服务器运行；
-
-     `Hepsub -txt jpsi_*`就是将所有的以`jspi`开头的文件交到服务器运行；
-   * -r 递归的提交指明目录下的全部所需作业
-    比如 `Hepsub -sh -r jobs`不仅把`jobs`下面的作业交到服务器，而且将子文件夹下及子子文件夹下的，依次类推；
-    比如 `Hepsub -sh -r .`这`.`代表当前文件夹。
-#### 指明提交作业的命令
-
-    * sub='sub commands'
-
-这个设计是考虑到服务器的接口有可能出现变化，也有可能是私人服务器的命令可能稍微不同，这样能最灵活的利用这套工具。
-#### 指定作业的类型
-作业的类型也可以自主定义
-
-  * type='pdf, cxx, C'
-
-其中文件类型用‘，’隔开。这是为了做初步筛选的方便，也是为了程序的运行方便，从实际运用来看，这项功能的使用频率很低。
-#### 指定作业的执行方式
-受服务器现在，只能用两种特定程序执行某项任务，包括`boss.exe`和`bash`，前者是进行数据分析的重要框架，后者是一种
-比较通用的脚本语言，如果用户想使用`python`或者`root`，只能曲线救国。首先一个与之对于的Bash文件，在bash文件里指明
-运行`python`程序等，比如
- ```bash
- #!/bin/usr/env root
- root -l -b -q fit.C 
+The environment configuration is set well in the "setup.sh", you need to source
+it.
+```bash
+   source BaskeAnaTool/setup.sh
 ```
-这个脚本能够实现使用服务器运行`root`程序。
-若按如下的方式指定运行作业的命令
-* exe="command" 
+For the shell with tcsh users, there is one "setup.csh" file achieving same
+effect.
+```bash
+   source BaskeAnaTool/setup.csh
+```
 
-那么这个系统会自动生成一个与之对应的bash脚本并提交到服务器。如果没有指定作业的运行方式，默认
-`C`文件用`root`执行，`py`文件用`python`执行。
 
-        
-## 自动生成MC模拟文件并提交
-对每个对撞能区，都有不同的命令来批量的生成模拟文件，并提交。每个命令都是有同一个
-基类派生出来。对于暂时没有考虑到的模拟情况，我们设置了一个脚本，只有把任何一个模拟的
-模板放进去，都会自动生成相应的命令。以Jpsi的模拟为例，典型的用法如下：
-     SimJpsi [decay.card] [number of events]
+## What does the basket contain?  
 
-第一个参数为模拟需要的卡片，第二个参数为期望模型的事例数。
-除了模拟为，还有如下的默认命令:
-* Sim3770 
-* SimNewJpsi
-* SimJpsi
-* Sim4180
+* submit jobs flexible
 
-### 添加新的模拟类型
-需要准备好模拟和重建样板，比如: template/simExample.txt 和
-template/recExample.txt, 在SimAndRec下，修改gen.py文件为
+> For example, assuming you are now at directory "jobs", after "ls", you find many jobs
+> need to be submitted.
+```bash
+jobs_ana_001.txt jobs_ana_004.txt jobs_ana_007.txt jobs_ana_010.txt 
+jobs_ana_002.txt jobs_ana_005.txt jobs_ana_008.txt jobs_ana_011.txt 
+jobs_ana_003.txt jobs_ana_006.txt jobs_ana_009.txt jobs_ana_012.txt 
+```
+> Now, you only need one command
+```bash
+Hepsub -txt *.txt
+```
+> If you find many jobs allocated in different directories at the "jobs". Also
+> one command is enough
+```bash
+Hepsub -txt -r .
+```
+> Don't forget to ".", which denotes the current directory.
+> You also can specify the file type, execute method, and submit way. 
+```bash
+Hepsub type="C, Cpp, cxx" exe="root -l -b -q" sub="hep_sub -g physics"
+```
+> Look into [https://github.com/xxmawhu/BaskeAnaTool](https://github.com/xxmawhu/BaskeAnaTool)
+> for more details.
+
+* Do MC simulation flexible
+> The following command is typically usage.
+```bash
+SimJpsi [decay.card] [number of events] <-make>
+```
+> The additional option "-make" will tell the simulator only generate the job
+> scrscripts without any submitting action.
+> You can enjoy the physics and forget all dirty bash script! 
+What job does the script exactly do?
+> Make three directories, `sub`, `raw`, `dst`, you can get the content from the
+> name. In the fildor `sub`, two text files begined with "rec" and "sim",
+> respectively, are generated for each simulation task. Later, an associated
+> bash file with name, "job_xxx.sh***" are create. The content is 
+```bash
+boss.exe sim_xxx.txt
+sleep 10
+boss.exe rec_xxx.txt
+```
+> The default events number for each simulation task is 20,000. When then number
+> of total events is too large, the event number for each task will be
+> increased. 
+How to DIY one?
+> Write the following into one file, for example "doSim.py"
 ```python
+#!/usr/env python
+import SimAndRec
+from SimAndRec import util
+svc = SimAndRec.process("sim.txt","rec.txt")
+if len(util.getArv()) == 0:
+    svc.Make()
+    svc.Sub()
+elif '-make' in util.getArv():
+    svc.Make()
+```
+> The you can use "doSim.py" now
+```
+python doSim.py [decay.card] [number of events] <-make>
+```
+> I also suggest you push "alias SimDIY='python /path/to/doSim.py'", into your
+> configuration file, once you use "doSim.py frequently.
+
+> A more convenient way is execute the gen.py in "SimAndRec".
+> The content of "gen.py" is 
+```python
+name = "DIYPsi2S"
+simff = "template/simdiyPsi2S.txt"
+recff = "template/recJpsi.txt"
 import Gen
-name = "Example"
-simff = "template/simExample.txt"
-recff = "template/recExample.txt"
 g = Gen.process(name, simff, recff)
 g.Make()
 ```
+> This script accompanied two things, first generate one `python` script named
+> "initDIYPsi2S.py", then add "alias SimDIYPsi2S ='path/to/initDIYPsi2S.py'" to
+> the "setup.(c)sh", so you need soure the setup.sh again.
+> You may get it, the special class "Gen" is designed to generate a script for MC
+> simulation. You only need to prepare the scripts for simulation and
+> reconstruction, then give it a name. Please remember the line break is not
+> alloallowed, `line break is not alloallowed`, `line break is not alloallowed`.
 
-执行gen.py即可，执行成功后会自动生成一个脚本来做生成批量的作业。需要注意一点，模板之中不能出现断行，因为程序功能有限，不可能为单个用户的需求去改变
-正个框架，c++语言有很多炫的特性，如果实现支持所有的特殊就等于做出一个编译器来了，这是本系统不能承受的。
+>If you want to change some options, just use the member method
+``` python
+svc.SetOpt(class, member, value)
+```
+> For example, you have to change the CMSEnergy of KKMC. It's easy to change it
+```python
+svc.SetOpt("KKMC", "energy",3.097)
+```
+* generate and submit typically BOSS event selection jobs
+> There is one class "ana" in module "Bes". Main features:
+```python
+setJobOption()
+addDataSet()
+addcut()
+make()
+sub()
+```
+> You can find some examples in the dirdirectory "BaskeAnaTool/tutorials"
+> The comments say for itself.
+```python
+from Bes import ana
+from Bes.commands import getoutput as do
+head = r"""
+#include "$ROOTIOROOT/share/jobOptions_ReadRec.txt"
+#include "$MAGNETICFIELDROOT/share/MagneticField.txt"
+#include "$RUNEVENTNUMBERALGROOT/share/jobOptions_RunEventNumber.txt"
+#include "$ABSCORROOT/share/jobOptions_AbsCor.txt"
+#include "$VERTEXFITROOT/share/jobOptions_VertexDbSvc.txt"
+#include "$VEEVERTEXALGROOT/share/jobOptions_veeVertex.txt"
+#include "$OMEGAXIKALGROOT/share/jobOptions.txt"
 
-### 有问题？
-请邮件联系maxx@ihep.ac.cn
+// pi0 and eta
+#include "$PI0ETATOGGRECALGROOT/share/jobOptions_Pi0EtaToGGRec.txt"
+Pi0EtaToGGRecAlg.PhotonInBarrelOrEndcap = true;
+Pi0EtaToGGRecAlg.PhotonApplyTimeCut = true;
+Pi0EtaToGGRecAlg.RejectBothInEndcap = true;
+
+OmegaXiKAlg.UseMatch = false;
+OmegaXiKAlg.ReadBeamE = false;
+
+OmegaXiKAlg.TagCCID = 3334;
+OmegaXiKAlg.IncludeCC = true;
+OmegaXiKAlg.FID = {3334, 310};
+
+// Ks
+OmegaXiKSelectorKs.MinMass = 0.469; // 0.487;
+OmegaXiKSelectorKs.MaxMass = 0.529; // 0.511;
+OmegaXiKSelectorKs.MaxChisq = 200; // 50; // 20
+OmegaXiKSelectorKs.Use2ndVFit = false; // true;
+OmegaXiKSelectorKs.MaxVFitChisq = 200; // 50; // 20
+OmegaXiKSelectorKs.MinFlightSig= 2.0;
+
+// Number of events to be processed (default is 10)
+ApplicationMgr.EvtMax = -1;
+
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel = 5;
+
+"""
+phys_ana = ana.ana()
+phys_ana.setjobhead(head)
+
+################################################################
+# maxsize: 
+# constrain the bulk of input `dst` file in one job, 
+# the unit is `GB`. Once the total bulk is larger than `maxsize`, the 
+# additional `.dst` will moved to the others or new one. 
+# setjobnum():
+# the number of jobs intend to make. Of course, the number of jobs will 
+# increase once the total `dst` is larger than expectation
+################################################################
+phys_ana.maxsize(15)
+phys_ana.setjobnum(30)
+
+# some one use `FILE`, while some prefer `FILE1`
+phys_ana.setrootname("FILE")
+
+################################################################
+# addst:
+# add a directory, which contains the `.dst` files directly.
+# Recommend use the following method, if you want to add too many directly
+# 
+# dirList = do("ls /besfs3/offline/data/664p03/psip/12mc/* -d").split()
+# dirList += do("ls /besfs3/offline/data/664p03/psip/09mc/* -d").split()
+# for dir in dirList:
+#     phys_ana.addst(dir)
+################################################################
+# phys_ana.addst("/besfs3/offline/data/664p03/psip/12mc/dst")
+# phys_ana.addst("/scratchfs/bes/sunhk/psip/dst")
+dirList = ["/bes3fs/offline/data/664p03/psip/09mc/dst",
+           "/bes3fs/offline/data/664p03/psip/12mc/dst"]
+for dir in dirList:
+    phys_ana.addst(dir)
+
+# addcut(`the input tree name`, `the cut`, `the output tree name`)
+# suggest to keep the output tree name same as the `input`
+phys_ana.addcut('sig', "1==1", 'sig')
+phys_ana.addcut('mc', "1==1", 'mc')
+
+phys_ana.make()
+# open the comment, once you decide to sub all jobs
+#phys_ana.sub()
+```
+> Running "ana_Psi2S_inc.py", feeling it more directly.
+If you meet any problems when using this package, please contact me with email,
+"maxx@ihep.ac.cn"
