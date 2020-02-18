@@ -125,6 +125,9 @@ class subjobs(object):
 
     def jobs(self):
         n = self._n
+        if n == 0 :
+            logger.error("the number of jobs is zero: {} ".format(
+                self._inputDstDir))
         self._tot = len(self._dstFileList)
         each = int(self._tot / n)
         logger.info("Total `.dst` files is {}".format(self._tot))

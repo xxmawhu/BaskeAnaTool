@@ -87,7 +87,7 @@ def query(idfile, jobsDT):
 
     for ji in jobIN:
         printlist(ji)
-
+    return
     if len(jobNO) > 0:
         sys.stdout.write("\nThere is NO such jobID on computing farms: \n")
         for jn in jobNO:
