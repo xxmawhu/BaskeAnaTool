@@ -17,6 +17,8 @@ class SubWithProcId(hepsub.hepsub):
     """
     path: hepsub.getPath()
        sub all jobs_%{ProcId}.txt in the fildor
+       the speciall usage with "%{ProcId}" in link
+       http://afsapply.ihep.ac.cn/cchelp/zh/local-cluster/jobs/HTCondor/#2-%E4%BD%9C%E4%B8%9A%E6%8F%90%E4%BA%A4
     """
 
     def __init__(self):
